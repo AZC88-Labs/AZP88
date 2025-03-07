@@ -27,9 +27,9 @@ You can view the live demo of the project on GitHub Pages:
 ## 🛠️ Tech Stack
   🔹 Frontend: HTML, CSS, JavaScript
   
-  🔹 Backend:
+  🔹 Backend: Python, FastAPI, Pydantic, SQL
   
-  🔹 Database:
+  🔹 Database: TBA
 ## 📸 Screenshots
 
 ## 📜 License
