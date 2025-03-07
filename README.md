@@ -26,7 +26,9 @@ You can view the live demo of the project on GitHub Pages:
   
 ## 🛠️ Tech Stack
   🔹 Frontend: HTML, CSS, JavaScript
+  
   🔹 Backend:
+  
   🔹 Database:
 ## 📸 Screenshots
 
