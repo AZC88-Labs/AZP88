@@ -12,9 +12,16 @@ You can view the live demo of the project on GitHub Pages:
 ## 📥 Installation
 
 ## 🚀 Roadmap
-
+  ⬜️ Task creation and editing 📝
+  ⬜️ Deadline system ⏳
+  ⬜️ Marking tasks as completed ✅
+  ⬜️ Points for completed tasks 🎯
+  ⬜️ User leveling system 📈
+  ⬜️ Statistics 📈
 ## 🛠️ Tech Stack
-  🔹 Frontend: HTML, CSS
+  🔹 Frontend: HTML, CSS, JavaScript
+  🔹 Backend:
+  🔹 Database:
 ## 📸 Screenshots
 
 ## 📜 License
