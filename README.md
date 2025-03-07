@@ -14,7 +14,7 @@ You can view the live demo of the project on GitHub Pages:
 ## 🚀 Roadmap
 
 ## 🛠️ Tech Stack
-
+  🔹 Frontend: HTML, CSS
 ## 📸 Screenshots
 
 ## 📜 License
