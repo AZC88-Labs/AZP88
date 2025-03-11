@@ -1,6 +1,7 @@
 *{
     margin: 0;
     font-family: Montserrat, sans-serif;
+    transition: 0.3s;
 }
 html, body { /* +main flex:1 sets footer to bottom */
     height: 100%;
@@ -25,6 +26,10 @@ header nav ul{
     display: flex;
     height: 55px;
 }
+.site-name{
+    display: flex;
+    align-items: center;
+}
 .nav-item{
     list-style: none;
     padding: 0 15px;
@@ -44,7 +49,6 @@ a{
     text-decoration: none;
     color: #141414;
 }
-
 footer{
     border-top: 2px solid #D7D7D7;
     background-color: #141414;
@@ -65,7 +69,7 @@ address{
 address p{
     padding: 0 25px 0 0;
 }
-.footer-left h2, .footer-left address{
+.brand, .footer-left address{
     padding: 50px 0 0 0;
 }
 .footer-left, .footer-right{
@@ -108,10 +112,78 @@ footer .footbutton {
     margin: 0;
     line-height: 42px;
 }
-
-@media (max-width: 768px) {
+.flogo{
+    filter: invert(1);
+}
+main section{
+    padding: 20px 220px;
+}
+#features{
+    display: flex;
+    justify-content: center;
+    gap: 120px;
+    flex-wrap: wrap;
+}
+.feature-box{
+    width: 280px;
+    height: 250px;
+}
+.photo{
+    height: 180px;
+    background-color: #E3E4D3;
+}
+.feature-box-info{
+    height: 70px;
+    background-color: #F3F3F3;
+}
+.feature-box-info h3{
+    padding: 5px;
+}
+.feature-box-info p{
+    padding: 0 5px;
+}
+#about .content{
+    padding: 50px 0;
+}
+#about .content h2{
+    padding: 20px 0;
+}
+#about .content p{
+    width: 500px;
+}
+@media (max-width: 1535px) {
+    #features{
+        gap:50px;
+    }
+    main section{
+        padding: 20px 150px;
+    }
+}
+@media (max-width: 1255px) {
+    #features{
+        gap:40px;
+    }
+    main section{
+        padding: 20px 100px;
+    }
+}
+@media (max-width: 767px) {
     header{
-        padding: 0 30px;
+        padding: 0 20px;
+    }
+    main section{
+        padding: 20px 20px;
+        align-items: center;
+    }
+    #features{
+        flex-wrap: nowrap;
+        flex-direction: column;
+    }
+    .logo{
+        width: 40px;
+    }
+    header h1{
+        font-size: 22px;
     }
     address {
         display: block;
@@ -125,5 +197,12 @@ footer .footbutton {
     }
     .footer-right {
         align-items: normal;
+    }
+    #about{
+        display: flex;
+        justify-content: center;
+    }
+    #about .content p{
+        width: 300px;
     }
 }
