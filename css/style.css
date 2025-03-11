@@ -35,7 +35,6 @@ header nav ul{
     padding: 0 15px;
     font-weight: 500;
     height: 100%;
-
 }
 .nav-item a{
     height: 100%;
@@ -48,6 +47,43 @@ header nav ul{
 a{
     text-decoration: none;
     color: #141414;
+}
+main section{
+    padding: 20px 220px;
+}
+#about .content{
+    padding: 50px 0;
+}
+#about .content h2{
+    padding: 20px 0;
+}
+#about .content p{
+    width: 500px;
+}
+#features{
+    display: flex;
+    justify-content: center;
+    gap: 120px;
+    flex-wrap: wrap;
+}
+.feature-box{
+    width: 280px;
+    height: 250px;
+}
+.photo{
+    height: 180px;
+    background-color: #E3E4D3;
+}
+.feature-box-info{
+    height: 70px;
+    background-color: #F3F3F3;
+}
+.feature-box-info h3{
+    padding: 5px;
+}
+.feature-box-info p{
+    padding: 0 5px;
+    font-size: 14px;
 }
 footer{
     border-top: 2px solid #D7D7D7;
@@ -114,42 +150,6 @@ footer .footbutton {
 }
 .flogo{
     filter: invert(1);
-}
-main section{
-    padding: 20px 220px;
-}
-#features{
-    display: flex;
-    justify-content: center;
-    gap: 120px;
-    flex-wrap: wrap;
-}
-.feature-box{
-    width: 280px;
-    height: 250px;
-}
-.photo{
-    height: 180px;
-    background-color: #E3E4D3;
-}
-.feature-box-info{
-    height: 70px;
-    background-color: #F3F3F3;
-}
-.feature-box-info h3{
-    padding: 5px;
-}
-.feature-box-info p{
-    padding: 0 5px;
-}
-#about .content{
-    padding: 50px 0;
-}
-#about .content h2{
-    padding: 20px 0;
-}
-#about .content p{
-    width: 500px;
 }
 @media (max-width: 1535px) {
     #features{
