@@ -74,6 +74,9 @@ main section{
     height: 180px;
     background-color: #E3E4D3;
 }
+.photo img{
+    width: 100%;
+}
 .feature-box-info{
     height: 70px;
     background-color: #F3F3F3;
