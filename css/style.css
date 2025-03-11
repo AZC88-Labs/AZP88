@@ -12,8 +12,8 @@ header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 110px;
-    height: 65px;
+    padding: 0 7vw;
+    min-height: 65px;
     border-bottom: 2px solid #D7D7D7;
 }
 main {
@@ -97,7 +97,7 @@ footer a{
     color: #E3E4D3;
 }
 .footer-content{
-    padding: 0 110px;
+    padding: 0 7vw;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -159,27 +159,15 @@ footer .footbutton {
         gap:50px;
     }
     main section{
-        padding: 20px 150px;
-    }
-}
-@media (max-width: 1255px) {
-    #features{
-        gap:40px;
-    }
-    main section{
-        padding: 20px 100px;
+        padding: 20px 120px;
     }
 }
 @media (max-width: 767px) {
-    header{
-        padding: 0 20px;
-    }
     main section{
         padding: 20px 20px;
         align-items: center;
     }
-    #features{
-        flex-wrap: nowrap;
+    #features, .footer-content{
         flex-direction: column;
     }
     .logo{
@@ -190,10 +178,6 @@ footer .footbutton {
     }
     address {
         display: block;
-    }
-    .footer-content{
-        padding: 0 30px;
-        flex-direction: column;
     }
     .footer-left, .footer-right {
         width: 100%;
