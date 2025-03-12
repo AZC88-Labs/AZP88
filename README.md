@@ -8,6 +8,7 @@ Stay organized, track deadlines, and collaborate efficiently!
 [![‎](https://img.shields.io/badge/%E2%80%8E-wrzepka-gray?labelColor=blue&style=for-the-badge&link=https://github.com/wrzepka)](https://github.com/wrzepka)
 
 
+
 You can view the live demo of the project on GitHub Pages:
 
 [![‎](https://img.shields.io/badge/%E2%80%8E-Live%20demo-gray?labelColor=red&style=for-the-badge&link=https://azc88-labs.github.io/AZP88/)](https://azc88-labs.github.io/AZP88/)
