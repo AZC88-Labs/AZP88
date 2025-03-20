@@ -207,7 +207,65 @@ footer .footbutton {
 .bullet.active {
     background-color: #77bd61;
 }
+.LoginFormSection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+.login-form{
+    width: 400px;
+    padding: 20px;
+    background-color: #141414;
+    color: #F3F3F3;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+.formSelect{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    height: 40px;
+    background-color: #353535;
+    border-radius: 13px;
+    padding: 5px;
+    margin: 20px;
+}
 
+.FSB{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45%;
+    height: 90%;
+    cursor: pointer;
+}
+.FSB.active{
+    background-color: #77bd61;
+    border-radius: 8px;
+}
+.login-form form input{
+    width: 96%;
+    height: 40px;
+    margin: 10px 0;
+    padding: 0 10px;
+    border: none;
+    border-radius: 5px;
+}
+.login-form form button{
+    width: 96%;
+    height: 40px;
+    margin: 10px 0;
+    background-color: #77bd61;
+    border: none;
+    border-radius: 5px;
+    color: #F3F3F3;
+    font-size: 16px;
+    font-weight: 500;
+}
 /* Media Queries */
 @media (max-width: 1535px) {
     #features{
