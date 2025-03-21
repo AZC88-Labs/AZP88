@@ -1,30 +1,30 @@
-window.onload = () => { //onload function - cahnge to actuall year
-    const currentYearFooter = document.querySelector(".bottom-footer"); //get the footer
-    const currentYear = (new Date().getFullYear()).toString(); //get the current year
-    if(!currentYearFooter.textContent.includes(currentYear)){ //check if the year is the same
-        currentYearFooter.innerHTML = "<p>©" + new Date().getFullYear() + " AZP88</p>"; //cahnge the year
+window.onload = () =>{ //onload check if the footer year is current year
+    const currentYear = new Date().getFullYear().toString(); //get current year
+    const footerYear = document.querySelector('.bottom-footer'); //get footer year
+    if(!footerYear.textContent.includes(currentYear)){ //if footer year is not current year
+        footerYear.innerHTML = "<p>>©${currentYear} AZP88</p>"; //set footer year to current year
     }
 }
 
-let pauza = 0; // follow the state of the player
+let pause = 0; //pause variable to check if the slide is paused or not
+const picon = document.querySelector('#play-icon'); //get play icon
 
-document.querySelector('.pause')?.addEventListener('click', function(){ //listen and change classes of pause button
-    const picon = document.querySelector('#play-icon'); //get ellement that has the icon
-    if(picon.classList.contains('fa-pause')){   //check if the icon is pause or play
-        picon.classList.remove('fa-pause'); //process of changing the icon
-        picon.classList.add('fa-play');
-        pauza = 1;  //change the state of the player
+document.querySelector('.pause')?.addEventListener('click', ()=>{ //pause button event listener
+    if(picon.classList.contains('fa-pause')){ //if play icon is pause
+        picon.classList.remove('fa-pause');
+        picon.classList.add('fa-play'); //change icon to play
+        pause = 1; //set pause to 1
     }else{
-        picon.classList.remove('fa-play');
-        picon.classList.add('fa-pause');
-        pauza = 0;
+        picon.classList.remove('fa-play'); //if play icon is play
+        picon.classList.add('fa-pause'); //change icon to pause
+        pause = 0; //set pause to 0
     }
-});
+})
 
 const bulletsCont = document.querySelector('.bullets'); // get the container of bullets
 
 if (bulletsCont) {
-    const images = ["img1.png","img2.png", "img3.png"]; //array of images(poor database of images XD)
+    const images = ["img01.svg","img02.svg", "img03.svg"]; //array of images(poor database of images XD)
 
     images.forEach((image, index)=> {
         const bullet = document.createElement('div'); // create a bullet for each image
@@ -35,6 +35,18 @@ if (bulletsCont) {
         bulletsCont.appendChild(bullet); // add bullet to the container
     });
 }
+
+bulletsCont.addEventListener('click', (event)=>{
+    const bullet = event.target; // get the bullet clicked
+    if(bullet.classList.contains('bullet')){
+        document.querySelector('.bullet.active')?.classList.remove('active');
+        bullet.classList.add('active');
+
+        const index = Array.from(bulletsCont.children).indexOf(bullet);
+        document.querySelector('.slideshow').src = `img/slider/img0${index+1}.svg`;
+    }
+});
+
 // walidacja?? XD
 
 document.getElementById("loginForm").addEventListener("submit", (event) => {
