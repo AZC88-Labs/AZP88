@@ -30,39 +30,51 @@
 <header>
   <div class="site-name"> <!-- Logo and site name-->
     <img src="img/logo.svg" alt="logo" width="60" class="logo">
-    <h1><a href="#">AZP88</a></h1>
+    <h1><a href="index.html">AZP88</a></h1>
   </div>
   <nav role="navigation">   <!-- Website navigation -->
     <ul>
-      <li class="nav-item"><a href="#" aria-label="Go to Contact Page">Contact</a></li>
+      <li class="nav-item"><a href="index.html#contact" aria-label="Go to Contact Page">Contact</a></li>
       <li class="nav-item"><a href="#" aria-label="Go to Login Page">Login</a></li>
     </ul>
   </nav>
 </header>
-<main>
-
-  <section class="LoginFormSection">
-    <div class="login-form">
-      <h2>Welcome back</h2>
-      <div class="formSelect">
-        <div class="FSB active">
-          <p>Sign In</p>
+<main class="Mlogin">
+  <section class="container-login" id="container-login">
+    <div class="form-container sign-up-container">
+      <form action="#">
+        <h2>Sign Up</h2>
+        <input type="text" placeholder="Username" required/>
+        <input type="email" placeholder="E-mail" required/>
+        <input type="password" placeholder="Password" required/>
+        <input type="password" placeholder="Confirm Password" required/>
+        <button>Sign Up</button>
+      </form>
+    </div>
+    <div class="form-container sign-in-container">
+      <form action="#">
+        <h2>Sign in</h2>
+        <input type="email" placeholder="E-mail" required/>
+        <input type="password" placeholder="Password" required/>
+        <a href="#">Forgot your password?</a>
+        <button>Sign In</button>
+      </form>
+    </div>
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h2>Welcome Back!</h2>
+          <p>Use your personal info to login</p>
+          <button class="ghost" id="signIn">Sign In</button>
         </div>
-        <div class="FSB">
-          <p>Sign Up</p>
+        <div class="overlay-panel overlay-right">
+          <h2>Wellcome!</h2>
+          <p>Enter your personal details and start your journey with us</p>
+          <button class="ghost" id="signUp">Sign Up</button>
         </div>
       </div>
-      <form id="loginForm">
-        <label for="email">E-mail:</label>
-        <input type="email" name="email" id="email" required><br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required><br>
-        <button type="submit">Login</button>
-      </form>
-      <p id="loginErrorMSG" style="color: red;"></p>
     </div>
   </section>
-
 </main>
 <footer>
   <section class="footer-content">
@@ -79,7 +91,7 @@
     <div class="footer-right">
       <p>Join us today and start managing your tasks effortlessly! Create your account now and take control of your productivity. 🚀</p>
       <div class="footer-buttons">
-        <a href="#" class="footbutton">Contact</a>
+        <a href="index.html#contact" class="footbutton">Contact</a>
         <a href="#" class="footbutton">Register</a>
       </div>
     </div>
