@@ -420,12 +420,14 @@ footer .footbutton {
     .contact-box{
         width: 100%;
     }
-    .logform.active{
+    .loginpage, .logform.active{
         flex-direction: column;
+    }
+    .loginbox{
+        width: 100%;
     }
     .Lform{
         width: 100%;
-
     }
     .Lform .content{
         transform: scale(0.95);
