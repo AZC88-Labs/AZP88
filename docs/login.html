@@ -6,63 +6,80 @@
   <title>AZP88</title>
   <link rel="stylesheet" href="css/style.css">
   <meta name="description" content="Simple planner for your tasks with some extra features and statistics.">
-
-  <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-  <meta property="og:title" content="AZP88"> <!-- Title showed in shared links -->
-  <meta property="og:type" content="website"> <!-- Type of your application-->
+  <meta property="og:title" content="AZP88">
+  <meta property="og:type" content="website">
   <meta property="og:url" content="https://azcx1.github.io/AZP88/">
   <meta property="og:image" content="">
   <meta property="og:image:alt" content="">
-
   <link rel="icon" href="" sizes="16x16, 32x32, 48x48">
   <link rel="icon" href="" type="image/svg+xml">
   <link rel="apple-touch-icon" href="">
-
-  <link rel="manifest" href="manifest/site.webmanifest"> <!-- Web App Manifest, PWA configuration file -->
+  <link rel="manifest" href="manifest/site.webmanifest">
   <meta name="theme-color" content="#E3E4D3">
 </head>
 <body>
 <header>
-  <div class="site-name"> <!-- Logo and site name-->
+  <div class="site-name">
     <img src="img/logo.svg" alt="logo" width="60" class="logo">
-    <h1><a href="#">AZP88</a></h1>
+    <h1><a href="index.html">AZP88</a></h1>
   </div>
-  <nav role="navigation">   <!-- Website navigation -->
+  <nav role="navigation">
     <ul>
-      <li class="nav-item"><a href="#" aria-label="Go to Contact Page">Contact</a></li>
-      <li class="nav-item"><a href="#" aria-label="Go to Login Page">Login</a></li>
+      <li class="nav-item"><a href="#about" aria-label="Go to Contact Page">Contact</a></li>
+      <li class="nav-item"><a href="login.html" aria-label="Go to Login Page">Login</a></li>
     </ul>
   </nav>
 </header>
 <main>
-
-  <section class="LoginFormSection">
-    <div class="login-form">
-      <h2>Welcome back</h2>
-      <div class="formSelect">
-        <div class="FSB active">
-          <p>Sign In</p>
+  <section class="loginpage">
+    <div class="loginbox">
+      <div class="logform active">
+        <div class="Lform">
+          <div class="content">
+            <form action="#">
+              <h1>Sign in</h1>
+              <input type="email" placeholder="Email" required/>
+              <input type="password" placeholder="Password" required/>
+              <a href="#">Forgot your password?</a>
+              <div class="form-right"><button>Sign In</button></div>
+            </form>
+          </div>
         </div>
-        <div class="FSB">
-          <p>Sign Up</p>
+        <div class="overlay">
+          <div class="content">
+            <h2>Welcome!</h2>
+            <p>Enter your personal details and start journey with us</p>
+            <button class="ghost" id="signIp">Sign Up</button>
+          </div>
         </div>
       </div>
-      <form id="loginForm">
-        <label for="email">E-mail:</label>
-        <input type="email" name="email" id="email" required><br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required><br>
-        <button type="submit">Login</button>
-      </form>
-      <p id="loginErrorMSG" style="color: red;"></p>
+      <div class="logform">
+        <div class="overlay">
+          <div class="content">
+            <h2>Welcome Back!</h2>
+            <p>To keep connected with us please login with your personal info</p>
+            <button class="ghost" id="signUp">Sign In</button>
+          </div>
+        </div>
+        <div class="Lform">
+          <div class="content">
+            <form action="#">
+              <h1>Sign Up</h1>
+              <input type="text" placeholder="Username" required/>
+              <input type="email" placeholder="Email" required/>
+              <input type="password" placeholder="Password" required/>
+              <input type="password" placeholder="Confirm password" required/>
+              <div class="form-right"><button>Sign In</button></div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
-
 </main>
 <footer>
   <section class="footer-content">
@@ -79,8 +96,8 @@
     <div class="footer-right">
       <p>Join us today and start managing your tasks effortlessly! Create your account now and take control of your productivity. 🚀</p>
       <div class="footer-buttons">
-        <a href="#" class="footbutton">Contact</a>
-        <a href="#" class="footbutton">Register</a>
+        <a href="#about" class="footbutton">Contact</a>
+        <a href="login.html" class="footbutton">Register</a>
       </div>
     </div>
   </section>

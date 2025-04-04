@@ -6,46 +6,42 @@
     <title>AZP88</title>
     <link rel="stylesheet" href="css/style.css">
     <meta name="description" content="Simple planner for your tasks with some extra features and statistics.">
-
-    <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <meta property="og:title" content="AZP88"> <!-- Title showed in shared links -->
-    <meta property="og:type" content="website"> <!-- Type of your application-->
+    <meta property="og:title" content="AZP88">
+    <meta property="og:type" content="website">
     <meta property="og:url" content="https://azcx1.github.io/AZP88/">
     <meta property="og:image" content="">
     <meta property="og:image:alt" content="">
-
     <link rel="icon" href="" sizes="16x16, 32x32, 48x48">
     <link rel="icon" href="" type="image/svg+xml">
     <link rel="apple-touch-icon" href="">
-
-    <link rel="manifest" href="manifest/site.webmanifest"> <!-- Web App Manifest, PWA configuration file -->
+    <link rel="manifest" href="manifest/site.webmanifest">
     <meta name="theme-color" content="#E3E4D3">
 </head>
 <body>
     <header>
-        <div class="site-name"> <!-- Logo and site name-->
+        <div class="site-name">
             <img src="img/logo.svg" alt="logo" width="60" class="logo">
             <h1><a href="index.html">AZP88</a></h1>
         </div>
-        <nav role="navigation">   <!-- Website navigation -->
+        <nav role="navigation">
             <ul>
-                <li class="nav-item"><a href="#contact" aria-label="Go to Contact Page">Contact</a></li>
+                <li class="nav-item"><a href="#about" aria-label="Go to Contact Page">Contact</a></li>
                 <li class="nav-item"><a href="login.html" aria-label="Go to Login Page">Login</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <section id="slider" aria-hidden="true">
-            <div class="slider-photo">
-                <img class="slideshow" src="img/slider/img01.svg" alt="slider photo1 descr">
-                <div class="slider-control">
-                        <div class="bullets"></div>
-                        <div class="pause"><i class="fa fa-pause" id="play-icon" style="font-size:20px"></i></div>
+        <section class="slider" aria-hidden="true">
+            <div class="slider-content">
+                <img class="slider-image" src="img/slider/img1.jpg" alt="img">
+                <div class="control-panel">
+                </div>
+                <div class="control-panel">
+                    <div class="pause"><i class="fa fa-pause" id="play-icon" style="font-size:20px"></i></div>
                 </div>
             </div>
         </section>
@@ -56,6 +52,18 @@
                     We are a passionate team dedicated to creating innovative and user-friendly web applications.
                     Our goal is to deliver high-quality solutions that enhance productivity and efficiency.
                 </p>
+            </div>
+            <div class="contact">
+                    <div class="contact-box">
+                        <form action="">
+                            <h2>Contact Us</h2>
+                            <p>Feel free to contact us ant time. We will get back to you as soon as we can!</p>
+                            <input type="text" name="name-contact" id="name-contact" placeholder="Name">
+                            <input type="email" name="email-contact" id="email--contact" placeholder="Email">
+                            <textarea name="message-contact" id="message-contact" placeholder="Your message..." rows="3" maxlength="150"></textarea>
+                            <div class="buttend"><button class="formbutton"><i class="fa fa-paper-plane" aria-hidden="true"></i></button></div>
+                        </form>
+                    </div>
             </div>
         </section>
         <section id="features">
@@ -89,9 +97,6 @@
                 </div>
             </div>
         </section>
-        <section id="contact">
-
-        </section>
     </main>
     <footer>
         <section class="footer-content">
@@ -108,8 +113,8 @@
             <div class="footer-right">
                 <p>Join us today and start managing your tasks effortlessly! Create your account now and take control of your productivity. 🚀</p>
                 <div class="footer-buttons">
-                    <a href="#" class="footbutton">Contact</a>
-                    <a href="#" class="footbutton">Register</a>
+                    <a href="#about" class="footbutton">Contact</a>
+                    <a href="login.html" class="footbutton">Register</a>
                 </div>
             </div>
         </section>

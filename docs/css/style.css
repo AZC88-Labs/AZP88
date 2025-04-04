@@ -9,7 +9,10 @@
     margin: 0;
     font-family: Montserrat, sans-serif;
 }
-html, body { /* +main flex:1 sets footer to bottom */
+html {
+    scroll-behavior: smooth;
+}
+html, body {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -18,7 +21,7 @@ a{
     text-decoration: none;
     color: var(--azgray-dark);
 }
-/* Header section */
+
 header{
     display: flex;
     justify-content: space-between;
@@ -43,22 +46,140 @@ header h1{
 .nav-item a:hover{
     border-bottom: 5px solid var(--azgreen);
 }
-/* main section */
-main {
-    flex: 1; /* +main flex:1 sets footer to bottom */
+header nav{
+    display: flex;
+    align-items: center;
 }
-main section{
+main {
+    flex: 1;
+}
+main section:not(:first-child){
     padding: 1.5vw 12vw;
+    margin-top: 40px;
+}
+#about{
+    display: flex;
+    justify-content: space-between;
 }
 #about .content{
-    padding: 50px 0;
+    width: 50%;
 }
-#about .content h2{
-    padding: 20px 0;
+#about .contact{
+    width: 50%;
+    height: 350px;
+    display: flex;
+    justify-content: center;
 }
-#about .content p{
-    width: 55%;
+#about h2{
+    margin: 15px 0;
 }
+.contact-box{
+    margin: 0;
+    width: 80%;
+}
+.contact-box form{
+    display: flex;
+    flex-direction: column;
+}
+.contact-box form p, .contact-box form input{
+    margin-bottom: 10px;
+}
+.contact-box form input{
+    padding: 4px;
+    height: 25px;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--azgray-li);
+    outline: none;
+}
+.contact-box form textarea{
+    resize: none;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--azgray-li);
+    outline: none;
+}
+.formbutton{
+    background-color: var(--azgreen);
+    height: 42px;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #F3F3F3;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: width 0.6s ease;
+}
+.formbutton:hover{
+    width: 100%;
+    transition: width 1s ease;
+}
+.buttend{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.slider{
+    width: 100%;
+    height: 480px;
+    border-bottom: 3px solid #cacaca;
+}
+.slider-content{
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+.slider-content img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+}
+.control-panel{
+    z-index: 2;
+    height: 20px;
+    background: rgba(213, 213, 213, 0.45);
+    border-radius: 10px;
+    color: #fff;
+    margin-bottom: 60px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+}
+.control-panel:last-child{
+    margin-right: 10vw;
+}
+.pause{
+    cursor: pointer;
+}
+.bullet{
+    background: #ffffff;
+    border-radius: 8px;
+    width: 15px;
+    height: 6px;
+    cursor: pointer;
+    overflow: hidden;
+    border: 1px solid rgba(38, 38, 38, 0.49);
+    transition: width 0.5s ease;
+}
+.bullet.active{
+    width: 38px;
+}
+.bullet-load{
+    width: 0;
+    height: 100%;
+    background: #3fa630;
+    transition: width 1s linear;
+}
+
 #features{
     display: flex;
     justify-content: center;
@@ -88,11 +209,12 @@ main section{
     padding: 0 5px;
     font-size: 14px;
 }
-/* footer */
+
 footer{
     border-top: 2px solid var(--azgray);
     background-color: var(--azgray-dark);
     color: var(--azwhite);
+    margin-top: 80px;
 }
 footer a{
     color: var(--azwhite);
@@ -152,118 +274,99 @@ footer .footbutton {
 .flogo{
     filter: invert(1);
 }
-/*features*/
-#slider{
-    padding: 0;
+.loginpage{
     width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.slider-photo{
-    width: 100%;
-    height: 680px;
-    position: relative;
-    overflow: hidden;
+.loginbox{
+    width: 60%;
+    height: 600px;
+    background-color: #f5f5f5;
+    -webkit-box-shadow: inset 0px 0px 18px -16px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 18px -16px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 18px -16px rgba(66, 68, 90, 1);
+    border-radius: 10px;
 }
-.slider-photo img {
-    width: 100%;
+.logform{
+    display: none;
+}
+.logform.active{
+    display: flex;
     height: 100%;
-    object-fit: cover;
+    align-items: center;
 }
-.slider-control{
+.Lform, .overlay{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Lform{
+    height: 100%;
+    background-color: #ffffff;
+    -webkit-box-shadow: 0px 0px 3px 2px rgba(245, 245, 245, 1);
+    -moz-box-shadow: 0px 0px 3px 2px rgba(245, 245, 245, 1);
+    box-shadow: 0px 0px 3px 2px rgba(245, 245, 245, 1);
+    border-radius: 10px;
+}
+.Lform .content form{
+    display: flex;
+    flex-direction: column;
+}
+.Lform .content form input{
+    margin: 5px 0;
+    padding: 4px;
+    height: 25px;
     width: 100%;
-    height: 45px;
-    position: absolute;
-    bottom: 80px;
-    left: -130px;
+    border: none;
+    border-bottom: 1px solid var(--azgray-li);
+    outline: none;
+}
+.Lform .content form a{
+    color: #9f9f9f;
+    font-size: 14px;
+    margin-top: 10px;
+}
+.form-right{
+    width: 100%;
     display: flex;
     justify-content: flex-end;
 }
-.pause{
-    width: 45px;
-    border-radius: 50%;
-    background-color: rgba(239, 239, 239, 0.5);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.bullets{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    padding-right: 15px;
-}
-.bullet{
-    width: 23px;
-    height: 8px;
-    background-color: rgba(239, 239, 239, 0.5);
-    border-radius: 8px;
-    cursor: pointer;
-}
-.bullet.active {
-    width: 45px;
+.Lform .content form button{
+    margin-top:5px;
+    border: none;
     background-color: var(--azgreen);
-    overflow: hidden;
-}
-/*login form*/
-.LoginFormSection{
+    color: var(--azwhite);
+    height: 32px;
+    width: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 70vh;
+    font-weight: 600;
 }
-.login-form{
-    width: 400px;
+.overlay .content{
     padding: 20px;
-    background-color: var(--azgray-dark);
-    color: #F3F3F3;
-    border-radius: 10px;
     display: flex;
     flex-direction: column;
-    align-items: center
-}
-.formSelect{
-    display: flex;
-    justify-content: center;
     align-items: center;
-    width: 70%;
-    height: 40px;
-    background-color: #353535;
-    border-radius: 13px;
-    padding: 5px;
-    margin: 20px;
 }
-
-.FSB{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 45%;
-    height: 90%;
-    cursor: pointer;
+.overlay .content > *{
+    margin-top: 10px;
 }
-.FSB.active{
-    background-color: #77bd61;
-    border-radius: 8px;
-}
-.login-form form input{
-    width: 96%;
-    height: 40px;
-    margin: 10px 0;
-    padding: 0 10px;
-    border: none;
-    border-radius: 5px;
-}
-.login-form form button{
-    width: 96%;
-    height: 40px;
-    margin: 10px 0;
-    background-color: #77bd61;
-    border: none;
-    border-radius: 5px;
-    color: #F3F3F3;
-    font-size: 16px;
+.ghost{
+    border: 2px solid var(--azgreen);
+    border-radius:8px;
+    width: 120px;
+    height: 45px;
     font-weight: 500;
+    font-size: 14px;
+    transition: transform 80ms ease-in;
+}
+.ghost:active{
+    transform: scale(0.95);
 }
 /* Media Queries */
 @media (max-width: 767px) {
@@ -273,8 +376,19 @@ footer .footbutton {
     main section{
         align-items: center;
     }
+    main section:not(:first-child) {
+        padding: 0;
+    }
     #features, .footer-content{
         flex-direction: column;
+    }
+    .feature-box {
+        width: 196px;
+        height: 188px;
+    }
+    .photo {
+        height: 140px;
+
     }
     .logo{
         width: 40px;
@@ -291,6 +405,7 @@ footer .footbutton {
     #about{
         display: flex;
         justify-content: center;
+        flex-direction: column;
     }
     .slider-photo{
         height: 550px;
@@ -298,5 +413,30 @@ footer .footbutton {
     .slider-control{
         left: 50%;
         justify-content: normal;
+    }
+    #about .contact{
+        margin-top: 50px;
+    }
+    .contact-box{
+        width: 100%;
+    }
+    .logform.active{
+        flex-direction: column;
+    }
+    .Lform{
+        width: 100%;
+
+    }
+    .Lform .content{
+        transform: scale(0.95);
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .control-panel:last-child {
+        margin-right: 0;
+    }
+    .slider-content {
+        justify-content: center
     }
 }
