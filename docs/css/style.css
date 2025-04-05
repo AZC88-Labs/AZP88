@@ -422,6 +422,7 @@ footer .footbutton {
     }
     .loginpage, .logform.active{
         flex-direction: column;
+        height: 100%;
     }
     .loginbox{
         width: 100%;
@@ -431,6 +432,9 @@ footer .footbutton {
     }
     .Lform .content{
         transform: scale(0.95);
+    }
+    .mobrev{
+        flex-direction: column-reverse !important;
     }
 }
 
