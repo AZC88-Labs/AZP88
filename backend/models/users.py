@@ -3,7 +3,6 @@ from ..db import Base
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 from sqlalchemy import String, Enum, Integer
 from .enums import UserRole
-from ..dependencies import hash_password, verify_password
 
 
 class User(Base):
@@ -17,18 +16,3 @@ class User(Base):
 
     groups: Mapped[list[Team]] = relationship("Team", secondary="team_members", back_populates="users")
     group_members: Mapped[list[TeamMember]] = relationship("TeamMember", back_populates="user")
-
-    def __init__(self, username: str, password: str):
-        self.username = username
-        self.hashed_password = hash_password(password)
-
-    def check_password(self, password: str) -> bool:
-        """
-        Checks if password matches hashed password.
-
-        :param password: plain text password to verify
-        :type password: str
-        :return: True if the password matches, otherwise False
-        :rtype: bool
-        """
-        return verify_password(password, self.hashed_password)
