@@ -1,7 +1,7 @@
 from sqlalchemy import enum
 
 
-class GroupRole(str, enum.Enum):
+class TeamRole(str, enum.Enum):
     admin = 'admin'
     member = 'member'
     guest = 'guest'

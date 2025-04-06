@@ -1,4 +1,4 @@
-from .groups import GroupMember, Group
+from .teams import Team, TeamMember
 from ..db import Base
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 from sqlalchemy import String, Enum, Integer
@@ -15,8 +15,8 @@ class User(Base):
     role: Mapped[UserRole] = mapped_column(Enum(UserRole, name="user_role", create_type=False), default=UserRole.user)
     hashed_password: Mapped[str] = mapped_column(String(255), nullable=False)
 
-    groups: Mapped[list[Group]] = relationship("Group", secondary="group_members", back_populates="users")
-    group_members: Mapped[list[GroupMember]] = relationship("GroupMember", back_populates="user")
+    groups: Mapped[list[Team]] = relationship("Team", secondary="team_members", back_populates="users")
+    group_members: Mapped[list[TeamMember]] = relationship("TeamMember", back_populates="user")
 
     def __init__(self, username: str, password: str):
         self.username = username

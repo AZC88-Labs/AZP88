@@ -5,7 +5,7 @@
 -- Dumped from database version 17.4
 -- Dumped by pg_dump version 17.4
 
--- Started on 2025-04-05 18:53:07
+-- Started on 2025-04-06 21:38:52
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -80,7 +80,7 @@ CREATE TYPE public.task_tag AS ENUM (
 ALTER TYPE public.task_tag OWNER TO postgres;
 
 --
--- TOC entry 902 (class 1247 OID 16690)
+-- TOC entry 896 (class 1247 OID 16690)
 -- Name: user_role; Type: TYPE; Schema: public; Owner: postgres
 --
 
@@ -97,25 +97,11 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 228 (class 1259 OID 16625)
--- Name: group_members; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.group_members (
-    user_id integer NOT NULL,
-    group_id integer NOT NULL,
-    role public.group_role DEFAULT 'pending'::public.group_role
-);
-
-
-ALTER TABLE public.group_members OWNER TO postgres;
-
---
 -- TOC entry 227 (class 1259 OID 16616)
--- Name: groups; Type: TABLE; Schema: public; Owner: postgres
+-- Name: teams; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.groups (
+CREATE TABLE public.teams (
     id integer NOT NULL,
     name character varying(255) NOT NULL,
     description text,
@@ -123,7 +109,7 @@ CREATE TABLE public.groups (
 );
 
 
-ALTER TABLE public.groups OWNER TO postgres;
+ALTER TABLE public.teams OWNER TO postgres;
 
 --
 -- TOC entry 226 (class 1259 OID 16615)
@@ -147,7 +133,7 @@ ALTER SEQUENCE public.groups_id_seq OWNER TO postgres;
 -- Name: groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.groups_id_seq OWNED BY public.groups.id;
+ALTER SEQUENCE public.groups_id_seq OWNED BY public.teams.id;
 
 
 --
@@ -212,7 +198,7 @@ ALTER SEQUENCE public.projects_id_seq OWNED BY public.projects.id;
 
 CREATE TABLE public.projects_owners (
     user_id integer NOT NULL,
-    group_id integer NOT NULL,
+    team_id integer NOT NULL,
     project_id integer NOT NULL
 );
 
@@ -327,6 +313,20 @@ ALTER SEQUENCE public.tasks_id_seq OWNED BY public.tasks.id;
 
 
 --
+-- TOC entry 228 (class 1259 OID 16625)
+-- Name: team_members; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.team_members (
+    user_id integer NOT NULL,
+    team_id integer NOT NULL,
+    role public.group_role DEFAULT 'pending'::public.group_role
+);
+
+
+ALTER TABLE public.team_members OWNER TO postgres;
+
+--
 -- TOC entry 218 (class 1259 OID 16564)
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
@@ -368,14 +368,6 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- TOC entry 4804 (class 2604 OID 16619)
--- Name: groups id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.groups ALTER COLUMN id SET DEFAULT nextval('public.groups_id_seq'::regclass);
-
-
---
 -- TOC entry 4798 (class 2604 OID 16576)
 -- Name: projects id; Type: DEFAULT; Schema: public; Owner: postgres
 --
@@ -400,6 +392,14 @@ ALTER TABLE ONLY public.tasks ALTER COLUMN id SET DEFAULT nextval('public.tasks_
 
 
 --
+-- TOC entry 4804 (class 2604 OID 16619)
+-- Name: teams id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.teams ALTER COLUMN id SET DEFAULT nextval('public.groups_id_seq'::regclass);
+
+
+--
 -- TOC entry 4797 (class 2604 OID 16567)
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
 --
@@ -408,30 +408,12 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
--- TOC entry 4830 (class 2606 OID 16630)
--- Name: group_members group_members_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.group_members
-    ADD CONSTRAINT group_members_pkey PRIMARY KEY (user_id, group_id);
-
-
---
--- TOC entry 4826 (class 2606 OID 16624)
--- Name: groups groups_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.groups
-    ADD CONSTRAINT groups_pkey PRIMARY KEY (id);
-
-
---
 -- TOC entry 4832 (class 2606 OID 16673)
 -- Name: projects_owners projects_owners_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.projects_owners
-    ADD CONSTRAINT projects_owners_pkey PRIMARY KEY (user_id, group_id, project_id);
+    ADD CONSTRAINT projects_owners_pkey PRIMARY KEY (user_id, team_id, project_id);
 
 
 --
@@ -471,6 +453,24 @@ ALTER TABLE ONLY public.tasks
 
 
 --
+-- TOC entry 4830 (class 2606 OID 24596)
+-- Name: team_members team_members_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.team_members
+    ADD CONSTRAINT team_members_pkey PRIMARY KEY (user_id, team_id);
+
+
+--
+-- TOC entry 4826 (class 2606 OID 16624)
+-- Name: teams teams_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.teams
+    ADD CONSTRAINT teams_pkey PRIMARY KEY (id);
+
+
+--
 -- TOC entry 4810 (class 2606 OID 16704)
 -- Name: users unique_email; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
@@ -480,21 +480,21 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 4828 (class 2606 OID 16708)
--- Name: groups unique_group_name; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.groups
-    ADD CONSTRAINT unique_group_name UNIQUE (name);
-
-
---
 -- TOC entry 4818 (class 2606 OID 16710)
 -- Name: projects unique_project_title; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.projects
     ADD CONSTRAINT unique_project_title UNIQUE (title);
+
+
+--
+-- TOC entry 4828 (class 2606 OID 16708)
+-- Name: teams unique_team_name; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.teams
+    ADD CONSTRAINT unique_team_name UNIQUE (name);
 
 
 --
@@ -516,24 +516,6 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 4835 (class 2606 OID 16636)
--- Name: group_members group_members_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.group_members
-    ADD CONSTRAINT group_members_group_id_fkey FOREIGN KEY (group_id) REFERENCES public.groups(id);
-
-
---
--- TOC entry 4836 (class 2606 OID 16631)
--- Name: group_members group_members_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.group_members
-    ADD CONSTRAINT group_members_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
 -- TOC entry 4839 (class 2606 OID 16664)
 -- Name: project_roles project_roles_project_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
@@ -552,21 +534,21 @@ ALTER TABLE ONLY public.project_roles
 
 
 --
--- TOC entry 4841 (class 2606 OID 16679)
--- Name: projects_owners projects_owners_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.projects_owners
-    ADD CONSTRAINT projects_owners_group_id_fkey FOREIGN KEY (group_id) REFERENCES public.groups(id);
-
-
---
--- TOC entry 4842 (class 2606 OID 16684)
+-- TOC entry 4841 (class 2606 OID 16684)
 -- Name: projects_owners projects_owners_project_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.projects_owners
     ADD CONSTRAINT projects_owners_project_id_fkey FOREIGN KEY (project_id) REFERENCES public.projects(id);
+
+
+--
+-- TOC entry 4842 (class 2606 OID 24597)
+-- Name: projects_owners projects_owners_team_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.projects_owners
+    ADD CONSTRAINT projects_owners_team_id_fkey FOREIGN KEY (team_id) REFERENCES public.teams(id);
 
 
 --
@@ -614,7 +596,25 @@ ALTER TABLE ONLY public.task_tags
     ADD CONSTRAINT task_tags_task_id_fkey FOREIGN KEY (task_id) REFERENCES public.tasks(id);
 
 
--- Completed on 2025-04-05 18:53:07
+--
+-- TOC entry 4835 (class 2606 OID 24590)
+-- Name: team_members team_members_team_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.team_members
+    ADD CONSTRAINT team_members_team_id_fkey FOREIGN KEY (team_id) REFERENCES public.teams(id);
+
+
+--
+-- TOC entry 4836 (class 2606 OID 24585)
+-- Name: team_members team_members_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.team_members
+    ADD CONSTRAINT team_members_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+-- Completed on 2025-04-06 21:38:53
 
 --
 -- PostgreSQL database dump complete
