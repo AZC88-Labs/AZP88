@@ -5,7 +5,7 @@
 -- Dumped from database version 17.4
 -- Dumped by pg_dump version 17.4
 
--- Started on 2025-04-06 21:38:52
+-- Started on 2025-04-06 21:48:13
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -20,22 +20,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 860 (class 1247 OID 16526)
--- Name: group_role; Type: TYPE; Schema: public; Owner: postgres
---
-
-CREATE TYPE public.group_role AS ENUM (
-    'admin',
-    'member',
-    'guest',
-    'pending'
-);
-
-
-ALTER TYPE public.group_role OWNER TO postgres;
-
---
--- TOC entry 866 (class 1247 OID 16546)
+-- TOC entry 863 (class 1247 OID 16546)
 -- Name: project_role; Type: TYPE; Schema: public; Owner: postgres
 --
 
@@ -49,7 +34,7 @@ CREATE TYPE public.project_role AS ENUM (
 ALTER TYPE public.project_role OWNER TO postgres;
 
 --
--- TOC entry 863 (class 1247 OID 16536)
+-- TOC entry 860 (class 1247 OID 16536)
 -- Name: task_role; Type: TYPE; Schema: public; Owner: postgres
 --
 
@@ -64,7 +49,7 @@ CREATE TYPE public.task_role AS ENUM (
 ALTER TYPE public.task_role OWNER TO postgres;
 
 --
--- TOC entry 869 (class 1247 OID 16554)
+-- TOC entry 866 (class 1247 OID 16554)
 -- Name: task_tag; Type: TYPE; Schema: public; Owner: postgres
 --
 
@@ -80,7 +65,22 @@ CREATE TYPE public.task_tag AS ENUM (
 ALTER TYPE public.task_tag OWNER TO postgres;
 
 --
--- TOC entry 896 (class 1247 OID 16690)
+-- TOC entry 902 (class 1247 OID 16526)
+-- Name: team_role; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.team_role AS ENUM (
+    'admin',
+    'member',
+    'guest',
+    'pending'
+);
+
+
+ALTER TYPE public.team_role OWNER TO postgres;
+
+--
+-- TOC entry 893 (class 1247 OID 16690)
 -- Name: user_role; Type: TYPE; Schema: public; Owner: postgres
 --
 
@@ -320,7 +320,7 @@ ALTER SEQUENCE public.tasks_id_seq OWNED BY public.tasks.id;
 CREATE TABLE public.team_members (
     user_id integer NOT NULL,
     team_id integer NOT NULL,
-    role public.group_role DEFAULT 'pending'::public.group_role
+    role public.team_role DEFAULT 'pending'::public.team_role
 );
 
 
@@ -614,7 +614,7 @@ ALTER TABLE ONLY public.team_members
     ADD CONSTRAINT team_members_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
--- Completed on 2025-04-06 21:38:53
+-- Completed on 2025-04-06 21:48:14
 
 --
 -- PostgreSQL database dump complete
