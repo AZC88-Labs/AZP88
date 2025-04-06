@@ -30,8 +30,8 @@ class UserCreate(UserBase):
             raise ValueError('Password must be at most 50 characters')
         if not re.search(r'[\W_]', password):
             raise ValueError('Password must contain at least one special character')
-        if not re.search(r'[A-Z]', password):
-            raise ValueError('Password must contain at least one uppercase letter')
+        if not re.search(r'[A-Z]', password) or not re.search(r'[0-9]', password):
+            raise ValueError("Password must contain at least one uppercase letter and one digit")
         return pwd_hash.hash(password)
 
     @field_validator('email')
