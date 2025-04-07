@@ -1,27 +1,26 @@
-from sqlalchemy import enum
+from sqlalchemy import Enum
 
-
-class TeamRole(str, enum.Enum):
+class TeamRole(str, Enum):
     admin = 'admin'
     member = 'member'
     guest = 'guest'
     pending = 'pending'
 
 
-class ProjectRole(str, enum.Enum):
+class ProjectRole(str, Enum):
     admin = 'admin'
     contributor = 'contributor'
     watcher = 'watcher'
 
 
-class TaskRole(str, enum.Enum):
+class TaskRole(str, Enum):
     owner = 'owner'
     assignee = 'assignee'
     reviewer = 'reviewer'
     watcher = 'watcher'
 
 
-class TaskTag(str, enum.Enum):
+class TaskTag(str, Enum):
     urgent = 'urgent'
     high = 'high'
     medium = 'medium'
@@ -29,6 +28,6 @@ class TaskTag(str, enum.Enum):
     completed = 'completed'
 
 
-class UserRole(str, enum.Enum):
+class UserRole(str, Enum):
     admin = 'admin'
     user = 'user'

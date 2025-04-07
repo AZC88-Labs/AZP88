@@ -1,16 +1,15 @@
 import re
 from pydantic import BaseModel, field_validator
-from ..models.enums import UserRole
-from argon2 import PasswordHasher
-
-pwd_hash = PasswordHasher()
-
+from backend.models.enums import UserRole
+from backend.services.security import hash_password
 
 class UserBase(BaseModel):
     username: str
     email: str
     role: UserRole
 
+    class Config:
+        orm_mode = True
 
 class UserCreate(UserBase):
     password: str
@@ -32,7 +31,7 @@ class UserCreate(UserBase):
             raise ValueError('Password must contain at least one special character')
         if not re.search(r'[A-Z]', password) or not re.search(r'[0-9]', password):
             raise ValueError("Password must contain at least one uppercase letter and one digit")
-        return pwd_hash.hash(password)
+        return hash_password(password)
 
     @field_validator('email')
     def validate_email(cls, email: str) -> str:
@@ -47,3 +46,8 @@ class UserCreate(UserBase):
         if len(email) < 5:
             raise ValueError('Email is too short, must be at least 5 characters')
         return email
+
+
+class UserLogin(UserBase):
+    id: int
+    password: str

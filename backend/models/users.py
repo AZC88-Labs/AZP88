@@ -1,8 +1,8 @@
-from .teams import Team, TeamMember
-from ..db import Base
+from teams import Team, TeamMember
+from backend.db import Base
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 from sqlalchemy import String, Enum, Integer
-from .enums import UserRole
+from enums import UserRole
 
 
 class User(Base):

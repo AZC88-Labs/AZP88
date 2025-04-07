@@ -1,5 +1,5 @@
 from datetime import datetime
-from ..db import Base
+from backend.db import Base
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 from sqlalchemy import String, Enum, Text, Integer, DateTime, ForeignKey
 from enums import TeamRole
