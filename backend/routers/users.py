@@ -1,8 +1,8 @@
 from requests import Session
-from backend.services.users import login_user
+from ..services.users import login_user
 from fastapi import Depends, APIRouter
-from backend.db import get_db
-from backend.schemas.users import UserLogin
+from ..db import get_db
+from ..schemas.users import UserLogin
 
 router = APIRouter(tags=["Authentication"])
 

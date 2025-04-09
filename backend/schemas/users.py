@@ -1,7 +1,7 @@
 import re
 from pydantic import BaseModel, field_validator
-from backend.models.enums import UserRole
-from backend.services.security import hash_password
+from ..models.enums import UserRole
+from ..services.security import hash_password
 
 class UserBase(BaseModel):
     username: str

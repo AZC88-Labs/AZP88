@@ -1,9 +1,9 @@
 from datetime import datetime
-from backend.db import Base
+from ..db import Base
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 from sqlalchemy import String, Enum, Text, Integer, DateTime, ForeignKey
-from enums import TeamRole
-from users import User
+from .enums import TeamRole
+from .users import User
 
 
 class Team(Base):
