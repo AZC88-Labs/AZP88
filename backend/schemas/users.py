@@ -83,6 +83,23 @@ class UserCreate(UserBase):
             raise ValueError("You used prohibited special sign")
         return username
 
+
 class UserLogin(UserBase):
-    id: int
     password: str
+
+    @field_validator('email')
+    def validate_email(cls, email: str) -> str:
+        """
+        Checks if email contains '@' and domain. It also checks length of the email.
+
+        :param email: plain text email to verify
+        :return: ValueError or plain text email.
+        :raises ValueError: If any of the validation conditions are not met.
+        """
+        if len(email) < 5:
+            raise ValueError('Email is too short, must be at least 5 characters')
+        if len(email) > 254:
+            raise ValueError('Email is too long, must be at most 254 characters')
+        if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email):
+            raise ValueError("Invalid email structure. Must contain '@' and domain.")
+        return email

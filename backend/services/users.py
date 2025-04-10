@@ -21,6 +21,6 @@ def login_user(db: Session, credentials: UserLogin):
             detail="Invalid username or password"
         )
 
-    jwt_token = create_access_token(data={"sub": credentials.id})
+    jwt_token = create_access_token(data={"sub": user.id})
 
     return {"access_token": jwt_token, "token_type": "bearer"}
