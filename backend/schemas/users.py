@@ -20,7 +20,7 @@ class UserCreate(UserBase):
     def validate_password(cls, password: str) -> str:
         """
         Checks if password length is valid.
-        Requirments:
+        Requirements:
         len: (8;50);
         at least one special character;
         at least one uppercase letter and one digit.
@@ -40,7 +40,7 @@ class UserCreate(UserBase):
             raise ValueError("Password must contain at least one uppercase letter and one digit")
         if re.search(r'\s', password):
             raise ValueError("It is prohibited to use space or other whitespace")
-        if re.search(r'[%^&^#@<>\'";/\\(){}\[\]]', password):
+        if re.search(r'[%^&#@<>\'";/\\(){}\[\]]', password):
             raise ValueError("You used prohibited special sign")
         return hash_password(password)
 
@@ -79,7 +79,7 @@ class UserCreate(UserBase):
             raise ValueError('Username is too long, must be at most 254 characters')
         if re.search(r'\s', username):
             raise ValueError("It is prohibited to use space or other whitespace")
-        if re.search(r'[%^&^#@<>\'";/\\(){}\[\]]', username):
+        if re.search(r'[%^&#@<>\'";/\\(){}\[\]]', username):
             raise ValueError("You used prohibited special sign")
         return username
 
