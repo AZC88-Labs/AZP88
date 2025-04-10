@@ -10,7 +10,7 @@ class UserBase(BaseModel):
     role: UserRole
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class UserCreate(UserBase):

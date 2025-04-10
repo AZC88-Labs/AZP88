@@ -1,8 +1,8 @@
 from requests import Session
-from ..services.users import login_user
+from ..services.users import login_user, register_user
 from fastapi import Depends, APIRouter
 from ..db import get_db
-from ..schemas.users import UserLogin
+from ..schemas.users import UserLogin, UserCreate
 
 router = APIRouter(tags=["Authentication"])
 
@@ -17,5 +17,21 @@ async def login(user_data: UserLogin, db: Session = Depends(get_db)):
     :param db: SQLAlchemy database session
     :return: JWT access token.
     """
+
     jwt_token = login_user(db, user_data)
+
+    return {"access_token": jwt_token, "token_type": "bearer"}
+
+
+@router.put("/register")
+async def register(user_data: UserCreate, db: Session = Depends(get_db)):
+    """
+    TODO
+    :param user_data:
+    :param db:
+    :return:
+    """
+
+    jwt_token = register_user(db, user_data)
+
     return {"access_token": jwt_token, "token_type": "bearer"}
