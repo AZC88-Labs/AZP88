@@ -8,7 +8,10 @@ SQLALCHEMY_DATABASE_URL = os.getenv('DATABASE_URL')
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
-Base = DeclarativeBase()
+
+
+class Base(DeclarativeBase):
+    pass
 
 
 def get_db():

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from backend.models.users import User
-from backend.schemas.users import UserLogin
-from security import verify_password, create_access_token
+from ..models.users import User
+from ..schemas.users import UserLogin
+from .security import verify_password, create_access_token
 from fastapi import HTTPException, status
 
 def login_user(db: Session, credentials: UserLogin):

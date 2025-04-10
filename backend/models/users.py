@@ -14,5 +14,5 @@ class User(Base):
     role: Mapped[UserRole] = mapped_column(Enum(UserRole, name="user_role", create_type=False), default=UserRole.user)
     hashed_password: Mapped[str] = mapped_column(String(255), nullable=False)
 
-    groups: Mapped[list[Team]] = relationship("Team", secondary="team_members", back_populates="users")
-    group_members: Mapped[list[TeamMember]] = relationship("TeamMember", back_populates="user")
+    groups: Mapped[list["Team"]] = relationship("Team", secondary="team_members", back_populates="users")
+    group_members: Mapped[list["TeamMember"]] = relationship("TeamMember", back_populates="user")

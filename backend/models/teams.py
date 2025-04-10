@@ -1,9 +1,8 @@
 from datetime import datetime
 from ..db import Base
 from sqlalchemy.orm import Mapped, relationship, mapped_column
-from sqlalchemy import String, Enum, Text, Integer, DateTime, ForeignKey
+from sqlalchemy import String, Enum as SQLEnum, Text, Integer, DateTime, ForeignKey
 from .enums import TeamRole
-from .users import User
 
 
 class Team(Base):
@@ -14,8 +13,8 @@ class Team(Base):
     description: Mapped[str] = mapped_column(Text, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
 
-    users: Mapped[list[User]] = relationship("User", secondary="team_members", back_populates="teams")
-    group_members: Mapped[list["TeamMember"]] = relationship("TeamMember", back_populates="team")
+    users: Mapped[list["User"]] = relationship("User", secondary="team_members", back_populates="groups")
+    group_members: Mapped[list["TeamMember"]] = relationship("TeamMember", back_populates="group")
 
 
 class TeamMember(Base):
@@ -23,8 +22,8 @@ class TeamMember(Base):
 
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey('users.id'), primary_key=True)
     group_id: Mapped[int] = mapped_column(Integer, ForeignKey('teams.id'), primary_key=True)
-    role: Mapped[TeamRole] = mapped_column(Enum(TeamRole, name="team_role", create_type=False),
-                                            default=TeamRole.member)
+    role: Mapped[TeamRole] = mapped_column(SQLEnum(TeamRole, name="team_role", create_type=False),
+                                           default=TeamRole.member)
 
-    user: Mapped[User] = relationship("User", back_populates="team_members")
-    group: Mapped[Team] = relationship("Team", back_populates="team_members")
+    user: Mapped["User"] = relationship("User", back_populates="group_members")
+    group: Mapped["Team"] = relationship("Team", back_populates="group_members")
