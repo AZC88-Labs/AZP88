@@ -1,8 +1,7 @@
-import jwt
 from sqlalchemy.orm import Session
 from ..models.users import User
 from ..schemas.users import UserLogin, UserCreate
-from .security import verify_password, create_access_token, hash_password, verify_access_token
+from .security import verify_password, create_access_token, hash_password
 from fastapi import HTTPException, status
 from ..models.enums import UserRole
 
@@ -18,7 +17,7 @@ def login_user(db: Session, credentials: UserLogin):
     """
     user = db.query(User).filter(User.email == credentials.email).first()
 
-    if not user or not verify_password(credentials.password, str(user.hashed_password)):
+    if not user or not verify_password(credentials.password, str(user.password)):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid username or password"
