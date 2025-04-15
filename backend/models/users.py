@@ -6,6 +6,18 @@ from .teams import Team, TeamMember
 
 
 class User(Base):
+    """
+    Represents a user in the database.
+
+    Attributes:
+        id (int): Unique identifier for the user.
+        username (str): Unique username for the user.
+        email (str): Email address of the user (must be unique).
+        role (UserRole): User's role in the system, defined by the UserRole enumeration (admin, user). Default value is 'user'.
+        password (str): User's hashed password stored in the database.
+        groups (list[Team]): List of teams the user belongs to, through the 'team_members' table.
+        group_members (list[TeamMember]): List of TeamMember objects representing the user's membership in teams.
+    """
     __tablename__ = 'users'
 
     id: Mapped[int] = mapped_column(
