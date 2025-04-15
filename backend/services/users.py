@@ -8,12 +8,7 @@ from ..models.enums import UserRole
 
 def login_user(db: Session, credentials: UserLogin):
     """
-    Validates user login credentials and returns a JWT access token.
-
-    :param db: SQLAlchemy database session
-    :param credentials: Pydantic schema containing user's email and password
-    :return: JWT access token as a string
-    :raises HTTPException: if credentials are invalid
+    TODO
     """
     user = db.query(User).filter(User.email == credentials.email).first()
 
@@ -31,9 +26,6 @@ def login_user(db: Session, credentials: UserLogin):
 def register_user(db: Session, credential: UserCreate):
     """
     TODO
-    :param db:
-    :param credential:
-    :return:
     """
 
     check_email = db.query(User).filter(User.email == credential.email).first()

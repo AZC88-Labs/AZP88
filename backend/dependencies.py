@@ -15,7 +15,6 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 def get_current_user(token: str = Depends(OAuth2PasswordBearer), db: Session = Depends(get_db)):
     """
     TODO
-    :return:
     """
 
     try:

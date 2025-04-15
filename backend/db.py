@@ -16,9 +16,7 @@ class Base(DeclarativeBase):
 
 def get_db():
     """
-    Provides a database session for use in requests or operations.
-
-    :return: a database session
+    TODO
     """
     db = SessionLocal()
     try:
