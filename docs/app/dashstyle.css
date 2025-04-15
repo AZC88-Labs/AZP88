@@ -1,0 +1,62 @@
+*{
+    margin: 0;
+    font-family: Montserrat, sans-serif;
+}
+html{
+    scroll-behavior: smooth;
+}
+body, html{
+    height: 100%;
+}
+main{
+    display: flex;
+    height: 100%;
+}
+.manageBar{
+    width: 200px;
+    border-right: 1px solid black;
+    padding: 10px 0;
+}
+.colectsection{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.coltitl{
+    padding-left: 10px;
+    height: 40px;
+    background: #f5f5f5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 3px solid #77bd61;
+    cursor: pointer;
+}
+.panel{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 0;
+}
+.active{
+    height: 100%;
+}
+.coltitl::after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 400;
+    content: "\f0fe";
+    color: #555;
+    padding-right: 10px;
+}
+.coltitl h3{
+    font-weight: bold;
+}
+.panel a{
+    color: #252525;
+    text-decoration: none;
+    font-size: 14px;
+    padding-left: 15px;
+    line-height: 21px;
+    letter-spacing: 1px;
+}

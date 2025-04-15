@@ -1,111 +1,194 @@
-window.onload = () =>{ //onload check if the footer year is current year
-    const currentYear = new Date().getFullYear().toString(); //get current year
-    const footerYear = document.querySelector('.bottom-footer'); //get footer year
-    if(!footerYear.textContent.includes(currentYear)){ //if footer year is not current year
-        footerYear.innerHTML = "<p>>©${currentYear} AZP88</p>"; //set footer year to current year
+// change current year
+window.onload = () =>{
+    const currentYear = new Date().getFullYear().toString();
+    const footerYear = document.querySelector('.bottom-footer');
+    if(!footerYear.textContent.includes(currentYear)){
+        footerYear.innerHTML = "<p>>©${currentYear} AZP88</p>";
     }
 }
+// image slider
+const controlPanel = document.querySelector('.control-panel');
 
-let pause = 0; //pause variable to check if the slide is paused or not
-const picon = document.querySelector('#play-icon'); //get play icon
+if(controlPanel){
+    const images = ['img1.jpg', 'img2.jpg', 'img3.webp'];
+    const changeTime = 5000;
+    let animationTimeout;
+    let isPaused = false;
 
-document.querySelector('.pause')?.addEventListener('click', ()=>{ //pause button event listener
-    if(picon.classList.contains('fa-pause')){ //if play icon is pause
-        picon.classList.remove('fa-pause');
-        picon.classList.add('fa-play'); //change icon to play
-        pause = 1; //set pause to 1
-    }else{
-        picon.classList.remove('fa-play'); //if play icon is play
-        picon.classList.add('fa-pause'); //change icon to pause
-        pause = 0; //set pause to 0
-    }
-})
-
-const bulletsCont = document.querySelector('.bullets'); // get the container of bullets
-
-if (bulletsCont) {
-    const images = ["img01.svg", "img02.svg", "img03.svg"]; //array of images(poor database of images XD)
-
-    images.forEach((image, index) => {
-        const bullet = document.createElement('div'); // create a bullet for each image
-        bullet.classList.add('bullet'); // add class to the bullet
-        if (index === 0) { // check if the bullet is the first one
-            bullet.classList.add('active'); // add class to the first bullet
+    document.querySelector('.pause')?.addEventListener('click', ()=>{
+        const picon = document.querySelector('#play-icon');
+        const actBullet = document.querySelector('.bullet-load');
+        if(picon.classList.contains('fa-pause')){
+            picon.classList.remove('fa-pause');
+            picon.classList.add('fa-play');
+            isPaused = true;
+            clearInterval(slideInterval);
+            clearTimeout(animationTimeout);
+            const loadprogress = window.getComputedStyle(actBullet);
+            const currwidth = loadprogress.getPropertyValue('width');
+            actBullet.style.transition = 'none';
+            actBullet.style.width = currwidth;
+        }else{
+            picon.classList.remove('fa-play');
+            picon.classList.add('fa-pause');
+            isPaused = false;
+            actBullet.style.width = '0%';
+            activeLoadAnim(actBullet);
+            startInterval();
         }
-        bulletsCont.appendChild(bullet); // add bullet to the container
+
     });
 
-
-    bulletsCont.addEventListener('click', (event) => {
-        const bullet = event.target; // get the bullet clicked
-        if (bullet.classList.contains('bullet')) {
-            document.querySelector('.bullet.active')?.classList.remove('active');
+    images.forEach((image,index)=>{
+        const bullet = document.createElement('div');
+        bullet.classList.add('bullet');
+        if(index === 0){
             bullet.classList.add('active');
+            const bulletInside = document.createElement('div');
+            bulletInside.classList.add('bullet-load');
+            bullet.appendChild(bulletInside);
+            activeLoadAnim(bulletInside);
+        }
+        controlPanel.appendChild(bullet);
+    });
 
-            const index = Array.from(bulletsCont.children).indexOf(bullet);
-            document.querySelector('.slideshow').src = `img/slider/img0${index + 1}.svg`;
+    const bullets = Array.from(controlPanel.children);
+    let bIndex=1;
+    function nextIndex(){
+        if(!isPaused) curBulletAct(bullets[bIndex]);
+    }
+
+    const sliderImage = document.querySelector('.slider-image');
+    function curBulletAct(target){
+        const lActive = controlPanel.querySelector('.active');
+        if(lActive) lActive.classList.remove('active');
+        target.classList.add('active');
+        bIndex = (bullets.indexOf(target)+1)%images.length;
+
+        isPaused = false;
+
+        const bulletInside = controlPanel.querySelector('.bullet-load');
+        if (bulletInside) {
+            bulletInside.remove();
+            target.appendChild(bulletInside);
+        }
+        sliderImage.src=`img/slider/${images[bullets.indexOf(target)]}`;
+        activeLoadAnim(bulletInside);
+    }
+
+    function activeLoadAnim(acBullet){
+        acBullet.style.transition = 'none';
+        acBullet.style.width = '0%';
+        clearTimeout(animationTimeout);
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                if (!isPaused) {
+                    acBullet.style.transition = `width ${changeTime / 1000}s linear`;
+                    acBullet.style.width = '100%';
+                }
+            });
+        });
+    }
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            clearInterval(slideInterval);
+            clearTimeout(animationTimeout);
+        } else if (!isPaused) {
+            const actBullet = document.querySelector('.bullet-load');
+            if (actBullet) {
+                activeLoadAnim(actBullet);
+            }
+            startInterval();
         }
     });
+
+    let slideInterval;
+    function startInterval(){
+        slideInterval = setInterval(nextIndex, changeTime);
+    }
+    function resetInterval(){
+        clearInterval(slideInterval);
+        startInterval();
+    }
+
+    controlPanel.addEventListener('click', (e)=>{
+        if(e.target.classList.contains('bullet')){
+            curBulletAct(e.target);
+            const pbtn = document.querySelector('#play-icon');
+            if(pbtn.classList.contains('fa-play')){
+                pbtn.classList.remove('fa-play');
+                pbtn.classList.add('fa-pause');
+            }
+        }
+        resetInterval()
+    });
+    startInterval();
 }
-// walidacja?? XD
-
-// document.getElementById("loginForm").addEventListener("submit", (event) => {
-//     event.preventDefault(); // pauza wysyłania formularza?
-//     const login = document.getElementById("email").value; // get login
-//     const password = document.getElementById("password").value; // get password
-//     const MSG = document.getElementById('loginErrorMSG');
-//
-//     MSG.textContent = "";
-//     MSG.style.color = "red";
-//
-//     const ValidEmail = (login) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(login);
-//     if(!ValidEmail(login)) return (MSG.textContent = "Invalid email format");
-//
-//     const ValidPassword = (password) => password.length >= 8;
-//     if(!ValidPassword(password)) return (MSG.textContent = "Password must contain at least 8 characters");
-//
-//     MSG.style.color = "green";
-//     MSG.textContent = "Login successful";
-
-    //walidacja powyzej(do pozniejszych zmian)
-
-    // const loginData = {
-    //     email: login,
-    //     password: password
-    // };
-
-    //fetch do serwera(do totalnych zmian pozniej XD)
-
-//     fetch('rzepkowyadres', {
-//         method: 'POST',
-//         headers:{
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(loginData)
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//             if(data.status === "success"){
-//                 window.location.href = "stronazalogowanapotemdozmianyrazemztymkodempewnie.html";
-//             }else{
-//                 MSG.textContent = data.message;
-//             }
-//         })
-//         .catch(error => {
-//             console.error("Error:", error);
-//             MSG.style.color = "red";
-//             MSG.textContent = "An error occurred. Please try again."; // Obsługa błędu
-//         });
-// });
-
-const signUpButton = document.getElementById('signUp');
-const signInButton = document.getElementById('signIn');
-const container = document.getElementById('container-login');
-
-signUpButton.addEventListener('click', () => {
-    container.classList.add("right-panel-active");
+// change login/register form
+const ghostButtons = document.querySelectorAll('.ghost');
+ghostButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const logforms = document.querySelectorAll('.logform');
+        logforms.forEach(form => {
+            form.classList.toggle('active');
+        });
+    });
 });
+// comunication with backend, validation, error messages
+document.getElementById('loginForm').addEventListener('submit', async  (e) => {
+    e.preventDefault();
 
-signInButton.addEventListener('click', () => {
-    container.classList.remove("right-panel-active");
+    const loginfos = e.target.querySelectorAll('input');
+    const login = loginfos[0].value.trim();
+    const passwd = loginfos[1].value.trim();
+
+    const logerror = document.querySelectorAll(".logalert");
+    let wypel = 0;
+
+    if(!login || !passwd){
+        logerror[0].innerHTML = "Wypełnij wszystkie pola!";
+        return;
+    }
+
+    if (login.length < 3) {
+        logerror[0].innerHTML = "Login musi mieć co najmniej 3 znaki.";
+        return;
+    }
+
+    if (passwd.length < 8) {
+        logerror[0].innerHTML = "Hasło musi mieć co najmniej 8 znaków.";
+        return;
+    }
+
+    const hasloStrongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
+    if (!hasloStrongRegex.test(passwd)) {
+        logerror[0].innerHTML = "Hasło musi zawierać dużą literę i cyfrę.";
+        return;
+    }
+
+    try {
+        const res = await fetch("/api/users/login", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({login, passwd})
+        });
+
+        console.log(res);
+
+        const result = await res.json();
+
+        if(res.ok){
+            localStorage.setItem('token', result.access_token);
+            logerror[0].style.color = "green";
+            logerror[0].innerHTML = "zalogowano!";
+            window.location.href = '/dashboard.html';
+        }else{
+            logerror[0].innerHTML = result.detail;
+        }
+    } catch (e){
+        logerror[0].innerHTML = "Wystąpił błąd połączenia z serwerem.";
+        console.error(e);
+    }
+
 });
