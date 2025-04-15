@@ -135,4 +135,60 @@ ghostButtons.forEach(button => {
         });
     });
 });
-//walidacja soon
+// comunication with backend, validation, error messages
+document.getElementById('loginForm').addEventListener('submit', async  (e) => {
+    e.preventDefault();
+
+    const loginfos = e.target.querySelectorAll('input');
+    const login = loginfos[0].value.trim();
+    const passwd = loginfos[1].value.trim();
+
+    const logerror = document.querySelectorAll(".logalert");
+    let wypel = 0;
+
+    if(!login || !passwd){
+        logerror[0].innerHTML = "Wypełnij wszystkie pola!";
+        return;
+    }
+
+    if (login.length < 3) {
+        logerror[0].innerHTML = "Login musi mieć co najmniej 3 znaki.";
+        return;
+    }
+
+    if (passwd.length < 8) {
+        logerror[0].innerHTML = "Hasło musi mieć co najmniej 8 znaków.";
+        return;
+    }
+
+    const hasloStrongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
+    if (!hasloStrongRegex.test(passwd)) {
+        logerror[0].innerHTML = "Hasło musi zawierać dużą literę i cyfrę.";
+        return;
+    }
+
+    try {
+        const res = await fetch("/api/users/login", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({login, passwd})
+        });
+
+        console.log(res);
+
+        const result = await res.json();
+
+        if(res.ok){
+            localStorage.setItem('token', result.access_token);
+            logerror[0].style.color = "green";
+            logerror[0].innerHTML = "zalogowano!";
+            window.location.href = '/dashboard.html';
+        }else{
+            logerror[0].innerHTML = result.detail;
+        }
+    } catch (e){
+        logerror[0].innerHTML = "Wystąpił błąd połączenia z serwerem.";
+        console.error(e);
+    }
+
+});

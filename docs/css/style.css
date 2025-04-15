@@ -368,6 +368,10 @@ footer .footbutton {
 .ghost:active{
     transform: scale(0.95);
 }
+.logalert{
+    color: #af0d0d;
+    max-width: 210px;
+}
 /* Media Queries */
 @media (max-width: 767px) {
     header ul{

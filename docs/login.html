@@ -40,12 +40,13 @@
       <div class="logform active">
         <div class="Lform">
           <div class="content">
-            <form action="#">
+            <form id="loginForm">
               <h1>Sign in</h1>
-              <input type="email" placeholder="Email" required/>
-              <input type="password" placeholder="Password" required/>
+              <input type="text" placeholder="Login" />
+              <input type="password" placeholder="Password" />
+              <p class="logalert"></p>
               <a href="#">Forgot your password?</a>
-              <div class="form-right"><button>Sign In</button></div>
+              <div class="form-right"><button type="submit">Sign In</button></div>
             </form>
           </div>
         </div>
@@ -67,7 +68,7 @@
         </div>
         <div class="Lform">
           <div class="content">
-            <form action="#">
+            <form id="registerForm">
               <h1>Sign Up</h1>
               <input type="text" placeholder="Username" required/>
               <input type="email" placeholder="Email" required/>
