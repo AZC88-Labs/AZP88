@@ -1,0 +1,42 @@
+1. Struktura commit message
+Commit message powinny składać się z dwóch części:
+Tytuł (pierwsza linia) – krótki, zwięzły opis, co zostało zmienione.
+Opis (opcjonalnie – kolejna część, po pustej linii) – szczegółowy opis, co zostało zrobione i dlaczego, jeśli to konieczne.
+
+Struktura:
+        <type>(<scope>): <short summary>
+
+        <optional detailed explanation>
+
+        <optional footer>
+
+<type>: Typ zmiany, np. feat, fix, docs, style, refactor, test, chore, itp.
+<scope>: Opcjonalny kontekst, np. nazwa funkcji lub pliku (np. UI, backend, API).
+<short summary>: Krótki i zwięzły opis zmian w jednym zdaniu (maksymalnie 50 znaków).
+<optional detailed explanation>: Opcjonalnie, jeśli zmiana wymaga dalszego wyjaśnienia.
+<optional footer>: Dodatkowe informacje, np. numer taska, link do issue, referencje do innych commitów.
+
+2. Typy commitów
+Zaleca się stosowanie typów commitów, które pomagają określić, jakiego rodzaju zmiany zostały wprowadzone w projekcie:
+
+feat – Nowa funkcjonalność (feature).
+fix – Poprawka błędu.
+docs – Zmiany w dokumentacji.
+style – Zmiany związane z formatowaniem kodu (bez zmian w logice).
+refactor – Refaktoryzacja kodu, zmiana struktury, optymalizacja (bez zmiany funkcji).
+test – Dodanie testów lub zmiany w testach.
+chore – Zmiany techniczne, które nie wpływają na logikę aplikacji (np. aktualizacja zależności).
+build – Zmiany związane z konfiguracją builda lub narzędziami.
+ci – Zmiany w konfiguracji ciągłej integracji.
+perf – Zmiany poprawiające wydajność.
+
+NP:
+feat(user-profile): add user profile page with editable fields
+
+Added a new profile page for users where they can view and edit their personal information.
+Includes:
+- Name, email, and password fields
+- Email validation on save
+- Option to upload profile picture
+
+This feature allows users to customize their profiles and is part of the user personalization initiative.

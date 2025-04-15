@@ -1,0 +1,92 @@
+1. Class Documentation Template
+    class ClassName:
+        """
+        A brief summary of what the class does and its main purpose.
+
+        A longer description of the class, explaining its role, what problems it solves, how it interacts with other classes, etc.
+
+        Attributes:
+            attribute_name (type): A brief explanation of what the attribute represents.
+            another_attribute_name (type): A brief explanation of another attribute.
+
+        Methods:
+            method_name(arg1: type, arg2: type) -> return_type:
+                Description of the method, what it does, its inputs, and outputs.
+
+        Example usage:
+            # Example of creating an object and using the methods:
+            obj = ClassName(attribute_name=value)
+            obj.method_name(arg1, arg2)
+        """
+
+        def __init__(self, attribute_name: type, another_attribute_name: type):
+            """
+            Constructor for the class.
+
+            Args:
+                attribute_name (type): Description of this argument.
+                another_attribute_name (type): Description of this argument.
+            """
+            self.attribute_name = attribute_name
+            self.another_attribute_name = another_attribute_name
+
+        def method_name(self, arg1: type, arg2: type) -> return_type:
+            """
+            Description of what this method does and its parameters.
+
+            Args:
+                arg1 (type): Description of the first argument.
+                arg2 (type): Description of the second argument.
+
+            Returns:
+                return_type: Description of what the method returns.
+            """
+            # Method implementation
+            pass
+
+2. Function Documentation Template
+    def function_name(arg1: type, arg2: type) -> return_type:
+        """
+        A brief summary of what the function does.
+
+        A longer description of the function, what it performs, any limitations, what data it processes, etc.
+
+        Args:
+            arg1 (type): Description of the first argument.
+            arg2 (type): Description of the second argument.
+
+        Returns:
+            return_type: Description of the returned value.
+
+        Example:
+            # Example of using the function
+            result = function_name(arg1=value1, arg2=value2)
+        """
+        # Function implementation
+        pass
+
+3. API Endpoint Documentation Template (FastAPI example)
+    from fastapi import FastAPI
+
+    app = FastAPI()
+
+    @app.get("/endpoint/{parameter}", response_model=ResponseModel)
+    def endpoint_name(parameter: type):
+        """
+        A brief summary of what this endpoint does.
+
+        A description of what this endpoint does and its purpose. What resource is being handled and in what context.
+
+        Args:
+            parameter (type): Description of the URL or query parameter.
+
+        Returns:
+            ResponseModel: Description of the structure of the data returned by this endpoint.
+
+        Example usage:
+            # GET /endpoint/value
+            # Returns a response in the format of ResponseModel
+            request = endpoint_name(parameter="value")
+        """
+        # Endpoint logic
+        return {"message": "example"}
