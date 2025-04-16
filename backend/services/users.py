@@ -1,3 +1,4 @@
+from argon2 import PasswordHasher
 from sqlalchemy.orm import Session
 from ..models.users import User
 from ..schemas.users import UserLogin, UserCreate
@@ -10,12 +11,15 @@ def login_user(db: Session, credentials: UserLogin):
     """
     TODO
     """
-    user = db.query(User).filter(User.email == credentials.email).first()
+    if '@' in credentials.login:
+        user = db.query(User).filter(User.email == credentials.login).first()
+    else:
+        user = db.query(User).filter(User.username == credentials.login).first()
 
-    if not user or not verify_password(credentials.password, str(user.password)):
+    if not user or not verify_password(credentials.password, user.password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid username or password"
+            detail="Invalid login or password"
         )
 
     jwt_token = create_access_token(data={"sub": user.id})

@@ -1,13 +1,13 @@
 import re
 from pydantic import BaseModel, field_validator, EmailStr
-from ..models.enums import UserRole
 from ..services.security import hash_password
 
 
 class UserBase(BaseModel):
     """
-    TODO
+    Basic User's pydantic schema.
     """
+
     class Config:
         from_attributes = True
 
@@ -44,7 +44,7 @@ class UserCreate(UserBase):
         if re.search(r"[\'\"\\/<>(){}\[\];`]", password):
             raise ValueError("Password contains prohibited special characters.")
 
-        return hash_password(password)
+        return password
 
     @field_validator('email')
     def validate_email(cls, email: str) -> str:

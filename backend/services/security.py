@@ -20,10 +20,12 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     """
     TODO
     """
+
     try:
-        pwd_hash.verify(plain_password, hashed_password)
+        pwd_hash.verify(hashed_password, plain_password)
         return True
-    except VerifyMismatchError:
+    except Exception as e:
+        print(e)
         return False
 
 
