@@ -1,6 +1,5 @@
 import re
 from pydantic import BaseModel, field_validator, EmailStr
-from ..services.security import hash_password
 
 
 class UserBase(BaseModel):
@@ -14,8 +13,21 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     """
-    TODO
+    Pydantic model for creating new users.
+
+    This class extends `UserBase` and adds fields required for user creation, such as:
+    - `password`: The password for the user.
+    - `email`: The user's email address.
+    - `username`: The user's chosen username.
+
+    Attributes:
+        password (str): The password for the new user.
+        email (str): The email address of the new user.
+        username (str): The chosen username for the new user.
+
+    This model is used for validating incoming data when creating a new user in the system.
     """
+
     password: str
     email: str
     username: str
@@ -23,8 +35,26 @@ class UserCreate(UserBase):
     @field_validator('password')
     def validate_password(cls, password: str) -> str:
         """
-        TODO
+        Validate the password for the new user.
+
+        This method checks whether the provided password fulfills the following requirements:
+            - Length between 8 and 255 characters.
+            - Contains at least one special character from the set: `!@#$%^&*`.
+            - Contains at least one uppercase letter.
+            - Contains at least one digit.
+            - Contains no whitespace characters (e.g., space, tab).
+            - Does not contain prohibited characters: `' " \ / < > ( ) { } [ ] ;`.
+
+        Args:
+            password (str): The password for the new user.
+
+        Returns:
+            str: The valid password if all requirements are met.
+
+        Raises:
+            ValueError: If the password does not meet any of the validation criteria.
         """
+
         if len(password) < 8:
             raise ValueError("Password must be at least 8 characters long.")
         if len(password) > 255:
