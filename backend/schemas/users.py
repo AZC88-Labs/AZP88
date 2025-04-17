@@ -79,7 +79,20 @@ class UserCreate(UserBase):
     @field_validator('email')
     def validate_email(cls, email: str) -> str:
         """
-        TODO
+        Validate the email for the new user.
+
+        This method checks whether the provided email fulfills the following requirements:
+            - Length between 5 and 254 characters.
+            - Has a valid email structure: example@example_domain.com
+
+        Args:
+            email (str): The email for the new user.
+
+        Returns:
+            str: The valid email if all requirements are met.
+
+        Raises:
+            ValueError: If the email does not meet any of the validation criteria.
         """
         email = email.lower().strip()
 
@@ -94,7 +107,20 @@ class UserCreate(UserBase):
     @field_validator('username')
     def validate_username(cls, username: str) -> str:
         """
-        TODO
+        Validate the username for the new user.
+
+        This method checks whether the provided username fulfills the following requirements:
+            - Length between 5 and 30 characters.
+            - Contains only letters, numbers, hyphens and underscores.
+
+        Args:
+            username (str): The username for the new user.
+
+        Returns:
+            str: The valid username if all requirements are met.
+
+        Raises:
+            ValueError: If the username does not meet any of the validation criteria.
         """
         username = username.strip()
 
@@ -110,26 +136,63 @@ class UserCreate(UserBase):
 
 class UserLogin(UserBase):
     """
-    TODO
+    Pydantic model for authentication the user.
+
+    This class extends `UserBase` and adds fields required for user login, such as:
+    - `password`: The password for the user.
+    - `login`: The user's login or email address.
+
+    Attributes:
+        login (str): The user's login or email address.
+        password (str): The password for the user.
+
+    This model is used for validating incoming data when authenticating a user in the system.
     """
     login: str
     password: str
 
     @field_validator('password')
-    def validate_password_not_empty(cls, value: str) -> str:
+    def validate_password_not_empty(cls, password: str) -> str:
         """
-        TODO
+        Validates that the password is not empty or only whitespace.
+
+        Args:
+            password (str): The password provided by the user during login.
+
+        Returns:
+            str: The validated password.
+
+        Raises:
+            ValueError: If the password is empty or contains only whitespace.
         """
-        if not value.strip():
+
+        if not password.strip():
             raise ValueError("Password cannot be empty")
-        return value
+        return password
 
     @field_validator('login')
     def validate_login(cls, login: str) -> str:
         """
-        TODO
+        Validates the login field by ensuring it is not empty, stripping whitespace,
+        and verifying email format if applicable.
+
+        If the login input appears to be an email address, it is converted to lowercase
+        and validated using Pydantic's `EmailStr` validator.
+
+        Args:
+            login (str): The login identifier provided by the user, which can be a username or email address.
+
+        Returns:
+            str: The cleaned and validated login string.
+
+        Raises:
+            ValueError: If the login is empty or resembles an email address but is not in a valid format.
         """
+
         login = login.strip()
+
+        if not login:
+            raise ValueError("Login cannot be empty")
 
         if re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', login):
             login = login.lower()
@@ -138,6 +201,5 @@ class UserLogin(UserBase):
                 EmailStr.validate(login)
             except ValueError:
                 raise ValueError("Invalid e-mail address")
-            return login
-        else:
-            return login
+
+        return login

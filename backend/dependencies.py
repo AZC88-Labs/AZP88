@@ -14,7 +14,19 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 def get_current_user(token: str = Depends(OAuth2PasswordBearer), db: Session = Depends(get_db)):
     """
-    TODO
+    Retrieves the current authenticated user from the database using the provided JWT access token.
+
+    Args:
+        token (str): JWT access token, extracted from the Authorization header.
+        db (Session): SQLAlchemy session for database interaction.
+
+    Returns:
+        User: The currently authenticated user object.
+
+    Raises:
+        HTTPException:
+            - 400 if the token is missing the 'sub' claim.
+            - 404 if the user with the given ID is not found in the database.
     """
 
     try:
