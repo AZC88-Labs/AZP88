@@ -1,6 +1,10 @@
 from enum import Enum
 
+
 class TeamRole(str, Enum):
+    """
+    Enum representing possible roles of a user in a team.
+    """
     admin = 'admin'
     member = 'member'
     guest = 'guest'
@@ -8,12 +12,18 @@ class TeamRole(str, Enum):
 
 
 class ProjectRole(str, Enum):
+    """
+    Enum representing possible roles of a user in a project.
+    """
     admin = 'admin'
     contributor = 'contributor'
     watcher = 'watcher'
 
 
 class TaskRole(str, Enum):
+    """
+    Enum representing possible roles of a user in a task.
+    """
     owner = 'owner'
     assignee = 'assignee'
     reviewer = 'reviewer'
@@ -21,6 +31,9 @@ class TaskRole(str, Enum):
 
 
 class TaskTag(str, Enum):
+    """
+    Enum representing possible tags of a task.
+    """
     urgent = 'urgent'
     high = 'high'
     medium = 'medium'
@@ -29,5 +42,8 @@ class TaskTag(str, Enum):
 
 
 class UserRole(str, Enum):
+    """
+    Enum representing possible roles of a user.
+    """
     admin = 'admin'
     user = 'user'

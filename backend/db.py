@@ -11,15 +11,26 @@ SessionLocal = scoped_session(sessionmaker(autocommit=False, autoflush=False, bi
 
 
 class Base(DeclarativeBase):
+    """
+    Base class for all SQLAlchemy ORM models.
+
+    Inherit from this class to define database models. This is the declarative base used by SQLAlchemy.
+    """
+
     pass
 
 
 def get_db():
     """
-    Provides a database session for use in requests or operations.
+    Yields a database session to be used in a dependency context.
 
-    :return: a database session
+    This function is intended to be used with FastAPI's dependency injection system.
+    It ensures that the database session is properly closed after the request is handled.
+
+    Yields:
+        Session: SQLAlchemy database session.
     """
+
     db = SessionLocal()
     try:
         yield db

@@ -11,27 +11,41 @@ pwd_hash = PasswordHasher()
 
 def hash_password(password: str) -> str:
     """
-    Hash a password and return it as a string
+    Hash a given password and return it.
 
-    :param password: plaint text password
-    :return: hashed password
+    Args:
+        password (str): The password to hash.
+
+    Returns:
+        str: The hashed password.
     """
+
     return pwd_hash.hash(password)
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """
-    Verify a plaint text password against the hashed password. Returns true if it matches, otherwise false.
+    Verify a plain password against a hashed password.
 
-    :param plain_password: plain text password given by user.
-    :param hashed_password: hashed password from db.
-    :return: True or False
+    Args:
+        plain_password (str): The plain password to verify.
+        hashed_password (str): The hashed password from the database.
+
+    Returns:
+        bool: True if the plain password matches the hashed password, False otherwise.
+
+    Raises:
+        VerifyMismatchError: If the plain password does not match the hashed password.
+        Exception: If there's an issue with the password verification (e.g., corrupted hash or other unexpected error).
     """
+
     try:
-        pwd_hash.verify(plain_password, hashed_password)
+        pwd_hash.verify(hashed_password, plain_password)
         return True
     except VerifyMismatchError:
-        return False
+        raise VerifyMismatchError("Password does not match the stored hash!")
+    except Exception as e:
+        raise Exception(f"Error during verification: {e}")
 
 
 load_dotenv()
@@ -42,11 +56,17 @@ ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES')
 
 def create_access_token(data: dict, expires_delta=timedelta(minutes=float(ACCESS_TOKEN_EXPIRE_MINUTES))) -> str:
     """
-    Generate a JWT access token.
+    Creates a JWT access token with an expiration time.
 
-    :param data: The payload to encode into the token (usually user info like email or ID)
-    :param expires_delta: Expiration time of the token (default: 1 hour)
-    :return: JWT token as a string
+    Args:
+        data (dict): The data to encode into the JWT's payload.
+        expires_delta (timedelta): The time duration until the token expires. Default is set from ACCESS_TOKEN_EXPIRE_MINUTES.
+
+    Returns:
+        str: The encoded JWT access token as a string.
+
+    Raises:
+        jwt.PyJWTError: If there is an issue with encoding the token (e.g., invalid secret key, algorithm error).
     """
 
     to_encode = data.copy()
@@ -59,12 +79,17 @@ def create_access_token(data: dict, expires_delta=timedelta(minutes=float(ACCESS
 
 def verify_access_token(token: str) -> dict:
     """
-    Verify the JWT token and return the payload if valid.
+    Verifies given JWT access token.
 
-    :param token: JWT token as a string
-    :return: Decoded payload if the token is valid
-    :raises: jwt.ExpiredSignatureError if the token is expired
-    :raises: jwt.InvalidTokenError if the token is invalid
+    Args:
+        token (str): The JWT access token.
+
+    Returns:
+        dict: The decoded JWT access token if successful, None otherwise.
+
+    Raises:
+        jwt.ExpiredSignatureError: If the token is expired.
+        jwt.InvalidTokenError: If the token is invalid.
     """
 
     try:

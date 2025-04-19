@@ -8,19 +8,28 @@ from ..models.enums import UserRole
 
 def login_user(db: Session, credentials: UserLogin):
     """
-    Validates user login credentials and returns a JWT access token.
+    Authenticates a user using either their username or email and password.
 
-    :param db: SQLAlchemy database session
-    :param credentials: Pydantic schema containing user's email and password
-    :return: JWT access token as a string
-    :raises HTTPException: if credentials are invalid
+    Args:
+        db (Session): SQLAlchemy session for database interaction.
+        credentials (UserLogin): Object containing the user's login (username or email) and password.
+
+    Returns:
+        str: A JWT access token if authentication is successful.
+
+    Raises:
+        HTTPException: Raised with status 401 if the login or password is incorrect.
     """
-    user = db.query(User).filter(User.email == credentials.email).first()
 
-    if not user or not verify_password(credentials.password, str(user.password)):
+    if '@' in credentials.login:
+        user = db.query(User).filter(User.email == credentials.login).first()
+    else:
+        user = db.query(User).filter(User.username == credentials.login).first()
+
+    if not user or not verify_password(credentials.password, user.password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid username or password"
+            detail="Invalid login or password"
         )
 
     jwt_token = create_access_token(data={"sub": user.id})
@@ -28,22 +37,31 @@ def login_user(db: Session, credentials: UserLogin):
     return jwt_token
 
 
-def register_user(db: Session, credential: UserCreate):
+def register_user(db: Session, credentials: UserCreate):
     """
-    TODO
-    :param db:
-    :param credential:
-    :return:
+    Registers a new user by storing their credentials in the database.
+
+    Args:
+        db (Session): SQLAlchemy session for database interaction.
+        credentials (UserCreate): Object containing the user's email, username, and password.
+
+    Returns:
+        str: A JWT access token generated after successful registration.
+
+    Raises:
+        HTTPException:
+            - 400 if the email is already registered.
+            - 400 if the username is already taken.
     """
 
-    check_email = db.query(User).filter(User.email == credential.email).first()
+    check_email = db.query(User).filter(User.email == credentials.email).first()
     if check_email:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Email is already registered"
         )
 
-    check_username = db.query(User).filter(User.username == credential.username).first()
+    check_username = db.query(User).filter(User.username == credentials.username).first()
     if check_username:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -51,9 +69,9 @@ def register_user(db: Session, credential: UserCreate):
         )
 
     new_user = User(
-        email=credential.email,
-        username=credential.username,
-        password=hash_password(credential.password),
+        email=credentials.email,
+        username=credentials.username,
+        password=hash_password(credentials.password),
         role=UserRole.user
     )
 
