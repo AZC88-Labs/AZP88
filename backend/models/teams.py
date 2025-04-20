@@ -29,8 +29,7 @@ class Team(Base):
         nullable=False
     )
     description: Mapped[str] = mapped_column(
-        Text,
-        nullable=False
+        Text
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
