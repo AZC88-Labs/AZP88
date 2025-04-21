@@ -15,7 +15,7 @@ class Team(Base):
         description (str): Description of the team's purpose.
         created_at (datetime): Timestamp when the team was created.
         users (list[User]): List of users associated with the team through the 'team_members' table.
-        group_members (list[TeamMember]): List of TeamMember objects representing the team's members and roles.
+        team_members (list[TeamMember]): List of TeamMember objects representing the team's members and roles.
     """
     __tablename__ = 'teams'
 
@@ -39,13 +39,13 @@ class Team(Base):
     users: Mapped[list["User"]] = relationship(
         "User",
         secondary="team_members",
-        back_populates="groups",
-        overlaps="group_members,user,group"
+        back_populates="teams",
+        overlaps="team_members,user,team"
     )
-    group_members: Mapped[list["TeamMember"]] = relationship(
+    team_members: Mapped[list["TeamMember"]] = relationship(
         "TeamMember",
-        back_populates="group",
-        overlaps="groups,users,user"
+        back_populates="team",
+        overlaps="teams,users,user"
     )
 
 
@@ -60,7 +60,7 @@ class TeamMember(Base):
         group_id (int): Foreign key referencing the team's ID.
         role (TeamRole): User's role in the team, defined by the TeamRole enumeration
             (admin, member, guest, or pending — waiting to be accepted).
-        group (Team): Relationship to the Team model.
+        team (Team): Relationship to the Team model.
     """
     __tablename__ = 'team_members'
 
@@ -84,8 +84,8 @@ class TeamMember(Base):
         back_populates="group_members",
         overlaps="groups,users"
     )
-    group: Mapped["Team"] = relationship(
+    team: Mapped["Team"] = relationship(
         "Team",
-        back_populates="group_members",
-        overlaps="groups,users"
+        back_populates="team_members",
+        overlaps="teams,users"
     )

@@ -43,7 +43,7 @@ class UserCreate(UserBase):
             - Contains at least one uppercase letter.
             - Contains at least one digit.
             - Contains no whitespace characters (e.g., space, tab).
-            - Does not contain prohibited characters: `' " \ / < > ( ) { } [ ] ;`.
+            - Does not contain prohibited characters: ' " \ / < > ( ) { } [ ] ;.
 
         Args:
             password (str): The password for the new user.

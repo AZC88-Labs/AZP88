@@ -15,8 +15,8 @@ class User(Base):
         email (str): Email address of the user (must be unique).
         role (UserRole): User's role in the system, defined by the UserRole enumeration (admin, user). Default value is 'user'.
         password (str): User's hashed password stored in the database.
-        groups (list[Team]): List of teams the user belongs to, through the 'team_members' table.
-        group_members (list[TeamMember]): List of TeamMember objects representing the user's membership in teams.
+        teams (list[Team]): List of teams the user belongs to, through the 'team_members' table.
+        team_members (list[TeamMember]): List of TeamMember objects representing the user's membership in teams.
     """
     __tablename__ = 'users'
 
@@ -47,14 +47,14 @@ class User(Base):
         nullable=False
     )
 
-    groups: Mapped[list["Team"]] = relationship(
+    teams: Mapped[list["Team"]] = relationship(
         "Team",
         secondary="team_members",
         back_populates="users",
-        overlaps="group_members,user,group"
+        overlaps="team_members,user,team"
     )
-    group_members: Mapped[list["TeamMember"]] = relationship(
+    team_members: Mapped[list["TeamMember"]] = relationship(
         "TeamMember",
         back_populates="user",
-        overlaps="groups,users,group"
+        overlaps="teams,users,team"
     )

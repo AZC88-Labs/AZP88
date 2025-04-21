@@ -68,7 +68,7 @@ class ProjectOwner(Base):
     TODO:docs
     """
 
-    __tablename__ = 'project_owners'
+    __tablename__ = 'projects_owners'
 
     user_id: Mapped[int] = mapped_column(
         Integer,
