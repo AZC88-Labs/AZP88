@@ -5,7 +5,7 @@
 -- Dumped from database version 17.4
 -- Dumped by pg_dump version 17.4
 
--- Started on 2025-04-06 21:48:13
+-- Started on 2025-04-22 15:08:09
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -128,7 +128,7 @@ CREATE SEQUENCE public.groups_id_seq
 ALTER SEQUENCE public.groups_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4994 (class 0 OID 0)
+-- TOC entry 4998 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -142,8 +142,8 @@ ALTER SEQUENCE public.groups_id_seq OWNED BY public.teams.id;
 --
 
 CREATE TABLE public.project_roles (
-    user_id integer,
-    project_id integer,
+    user_id integer NOT NULL,
+    project_id integer NOT NULL,
     role public.project_role DEFAULT 'contributor'::public.project_role
 );
 
@@ -183,7 +183,7 @@ CREATE SEQUENCE public.projects_id_seq
 ALTER SEQUENCE public.projects_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4995 (class 0 OID 0)
+-- TOC entry 4999 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: projects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -235,7 +235,7 @@ CREATE SEQUENCE public.tags_id_seq
 ALTER SEQUENCE public.tags_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4996 (class 0 OID 0)
+-- TOC entry 5000 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -249,8 +249,8 @@ ALTER SEQUENCE public.tags_id_seq OWNED BY public.tags.id;
 --
 
 CREATE TABLE public.task_assignees (
-    user_id integer,
-    task_id integer,
+    user_id integer NOT NULL,
+    task_id integer NOT NULL,
     assigned_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     role public.task_role
 );
@@ -304,7 +304,7 @@ CREATE SEQUENCE public.tasks_id_seq
 ALTER SEQUENCE public.tasks_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4997 (class 0 OID 0)
+-- TOC entry 5001 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: tasks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -359,7 +359,7 @@ CREATE SEQUENCE public.users_id_seq
 ALTER SEQUENCE public.users_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4998 (class 0 OID 0)
+-- TOC entry 5002 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -408,7 +408,16 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
--- TOC entry 4832 (class 2606 OID 16673)
+-- TOC entry 4833 (class 2606 OID 32780)
+-- Name: project_roles project_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.project_roles
+    ADD CONSTRAINT project_roles_pkey PRIMARY KEY (user_id, project_id);
+
+
+--
+-- TOC entry 4835 (class 2606 OID 16673)
 -- Name: projects_owners projects_owners_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -435,12 +444,12 @@ ALTER TABLE ONLY public.tags
 
 
 --
--- TOC entry 4824 (class 2606 OID 16604)
--- Name: task_tags task_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 4831 (class 2606 OID 32778)
+-- Name: task_assignees task_assignees_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.task_tags
-    ADD CONSTRAINT task_tags_pkey PRIMARY KEY (task_id, tag_id);
+ALTER TABLE ONLY public.task_assignees
+    ADD CONSTRAINT task_assignees_pkey PRIMARY KEY (user_id, task_id);
 
 
 --
@@ -453,7 +462,7 @@ ALTER TABLE ONLY public.tasks
 
 
 --
--- TOC entry 4830 (class 2606 OID 24596)
+-- TOC entry 4829 (class 2606 OID 24596)
 -- Name: team_members team_members_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -462,7 +471,7 @@ ALTER TABLE ONLY public.team_members
 
 
 --
--- TOC entry 4826 (class 2606 OID 16624)
+-- TOC entry 4825 (class 2606 OID 16624)
 -- Name: teams teams_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -489,7 +498,7 @@ ALTER TABLE ONLY public.projects
 
 
 --
--- TOC entry 4828 (class 2606 OID 16708)
+-- TOC entry 4827 (class 2606 OID 16708)
 -- Name: teams unique_team_name; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -516,7 +525,42 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 4839 (class 2606 OID 16664)
+-- TOC entry 4823 (class 1259 OID 32791)
+-- Name: idx_task_tag_unique; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX idx_task_tag_unique ON public.task_tags USING btree (task_id, tag_id);
+
+
+--
+-- TOC entry 4836 (class 2606 OID 32772)
+-- Name: tasks fk_project; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tasks
+    ADD CONSTRAINT fk_project FOREIGN KEY (project_id) REFERENCES public.projects(id);
+
+
+--
+-- TOC entry 4837 (class 2606 OID 32786)
+-- Name: task_tags fk_tag; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.task_tags
+    ADD CONSTRAINT fk_tag FOREIGN KEY (tag_id) REFERENCES public.tags(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 4838 (class 2606 OID 32781)
+-- Name: task_tags fk_task; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.task_tags
+    ADD CONSTRAINT fk_task FOREIGN KEY (task_id) REFERENCES public.tasks(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 4843 (class 2606 OID 16664)
 -- Name: project_roles project_roles_project_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -525,7 +569,7 @@ ALTER TABLE ONLY public.project_roles
 
 
 --
--- TOC entry 4840 (class 2606 OID 16659)
+-- TOC entry 4844 (class 2606 OID 16659)
 -- Name: project_roles project_roles_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -534,7 +578,7 @@ ALTER TABLE ONLY public.project_roles
 
 
 --
--- TOC entry 4841 (class 2606 OID 16684)
+-- TOC entry 4845 (class 2606 OID 16684)
 -- Name: projects_owners projects_owners_project_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -543,7 +587,7 @@ ALTER TABLE ONLY public.projects_owners
 
 
 --
--- TOC entry 4842 (class 2606 OID 24597)
+-- TOC entry 4846 (class 2606 OID 24597)
 -- Name: projects_owners projects_owners_team_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -552,7 +596,7 @@ ALTER TABLE ONLY public.projects_owners
 
 
 --
--- TOC entry 4843 (class 2606 OID 16674)
+-- TOC entry 4847 (class 2606 OID 16674)
 -- Name: projects_owners projects_owners_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -561,7 +605,7 @@ ALTER TABLE ONLY public.projects_owners
 
 
 --
--- TOC entry 4837 (class 2606 OID 16650)
+-- TOC entry 4841 (class 2606 OID 16650)
 -- Name: task_assignees task_assignees_task_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -570,7 +614,7 @@ ALTER TABLE ONLY public.task_assignees
 
 
 --
--- TOC entry 4838 (class 2606 OID 16645)
+-- TOC entry 4842 (class 2606 OID 16645)
 -- Name: task_assignees task_assignees_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -579,25 +623,7 @@ ALTER TABLE ONLY public.task_assignees
 
 
 --
--- TOC entry 4833 (class 2606 OID 16610)
--- Name: task_tags task_tags_tag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.task_tags
-    ADD CONSTRAINT task_tags_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES public.tags(id);
-
-
---
--- TOC entry 4834 (class 2606 OID 16605)
--- Name: task_tags task_tags_task_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.task_tags
-    ADD CONSTRAINT task_tags_task_id_fkey FOREIGN KEY (task_id) REFERENCES public.tasks(id);
-
-
---
--- TOC entry 4835 (class 2606 OID 24590)
+-- TOC entry 4839 (class 2606 OID 24590)
 -- Name: team_members team_members_team_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -606,7 +632,7 @@ ALTER TABLE ONLY public.team_members
 
 
 --
--- TOC entry 4836 (class 2606 OID 24585)
+-- TOC entry 4840 (class 2606 OID 24585)
 -- Name: team_members team_members_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -614,7 +640,7 @@ ALTER TABLE ONLY public.team_members
     ADD CONSTRAINT team_members_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
--- Completed on 2025-04-06 21:48:14
+-- Completed on 2025-04-22 15:08:09
 
 --
 -- PostgreSQL database dump complete

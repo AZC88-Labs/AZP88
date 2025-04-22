@@ -3,7 +3,7 @@ from ..db import Base
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 from sqlalchemy import String, Enum as SQLEnum, Text, Integer, DateTime, ForeignKey
 from .enums import TeamRole
-
+from .projects import projects_owners
 
 class Team(Base):
     """
@@ -14,8 +14,10 @@ class Team(Base):
         name (str): Name of the team (must be unique).
         description (str): Description of the team's purpose.
         created_at (datetime): Timestamp when the team was created.
-        users (list[User]): List of users associated with the team through the 'team_members' table.
-        team_members (list[TeamMember]): List of TeamMember objects representing the team's members and roles.
+
+        users (list[User]): List of users associated with the team, linked via the 'team_members' association table.
+        team_members (list[TeamMember]): List of TeamMember objects, representing users and their roles within the team.
+        owned_projects (list[Project]): Projects owned by this team, linked via the 'projects_owners' table.
     """
     __tablename__ = 'teams'
 
@@ -47,20 +49,25 @@ class Team(Base):
         back_populates="team",
         overlaps="teams,users,user"
     )
+    owned_projects: Mapped[list["Project"]] = relationship(
+        "Project",
+        secondary=projects_owners,
+        back_populates="owner_teams",
+        overlaps="owner_teams"
+    )
 
 
 class TeamMember(Base):
     """
-    Association table linking users to teams.
-
-    Stores the user's role within a specific team.
+    Represents the association between a user and a team, along with the user's role in the team.
 
     Attributes:
         user_id (int): Foreign key referencing the user's ID.
         group_id (int): Foreign key referencing the team's ID.
-        role (TeamRole): User's role in the team, defined by the TeamRole enumeration
-            (admin, member, guest, or pending — waiting to be accepted).
-        team (Team): Relationship to the Team model.
+        role (TeamRole): User's role in the team, defined by the TeamRole enumeration (admin, member, guest, or pending).
+
+        team (Team): Relationship to the Team model, linking the user to the team.
+        user (User): Relationship to the User model, linking the user to their team membership.
     """
     __tablename__ = 'team_members'
 
@@ -81,8 +88,8 @@ class TeamMember(Base):
 
     user: Mapped["User"] = relationship(
         "User",
-        back_populates="group_members",
-        overlaps="groups,users"
+        back_populates="team_members",
+        overlaps="teams,users"
     )
     team: Mapped["Team"] = relationship(
         "Team",
