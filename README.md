@@ -20,7 +20,7 @@ https://azc88-labs.github.io/AZP88/
 
 - chart.js
 
-**Server:**  Python, FastAPI, Pydantic, SQLAlchemy, ostgreSQL
+**Server:**  Python, FastAPI, Pydantic, SQLAlchemy, PostgreSQL
 
 
 ## Features
