@@ -55,7 +55,7 @@ def register(user_data: UserCreate, db: Session = Depends(get_db)):
     return {"access_token": jwt_token, "token_type": "bearer"}
 
 
-@router.get(
+@router.post(
     "/me",
     response_model=UserBase,
     summary="Get current user info",
