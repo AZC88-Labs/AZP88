@@ -5,9 +5,9 @@ from .security import verify_password, create_access_token, hash_password
 from fastapi import HTTPException, status
 from ..models.enums import UserRole
 
-
 def login_user(db: Session, credentials: UserLogin):
     """
+    TODO: change db to Depends and delete it from the routers
     Authenticates a user using either their username or email and password.
 
     Args:
@@ -78,7 +78,6 @@ def register_user(db: Session, credentials: UserCreate):
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-
     jwt_token = create_access_token(data={"sub": new_user.id})
 
     return jwt_token
