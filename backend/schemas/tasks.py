@@ -30,7 +30,7 @@ class TaskEdit(TaskBase):
 
 class TaskDelete(TaskBase):
     """
-    TODO: documentation, validation
+    TODO: documentation, validation. MOZLIWE ZE USELESS
     """
 
     title: str
@@ -64,6 +64,6 @@ class TagEdit(TagBase):
 
 class TagDelete(TagBase):
     """
-    TODO: documentation, validation
+    TODO: documentation, validation MOZLIWE ZE USELESS
     """
     tag_name: str
