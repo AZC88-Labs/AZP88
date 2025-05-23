@@ -15,7 +15,7 @@ class UserCreate(UserBase):
     """
     Pydantic model for creating new users.
 
-    This class extends `UserBase` and adds fields required for user creation, such as:
+    This class extends `UserBase` and adds fields required for user creation, such as
     - `password`: The password for the user.
     - `email`: The user's email address.
     - `username`: The user's chosen username.
@@ -43,7 +43,7 @@ class UserCreate(UserBase):
             - Contains at least one uppercase letter.
             - Contains at least one digit.
             - Contains no whitespace characters (e.g., space, tab).
-            - Does not contain prohibited characters: ' " \ / < > ( ) { } [ ] ;.
+            - Does not contain prohibited characters: ' " \\ / < > () { } [ ] ;.
 
         Args:
             password (str): The password for the new user.
@@ -111,7 +111,7 @@ class UserCreate(UserBase):
 
         This method checks whether the provided username fulfills the following requirements:
             - Length between 5 and 30 characters.
-            - Contains only letters, numbers, hyphens and underscores.
+            - Contains only letters, numbers, hyphens, and underscores.
 
         Args:
             username (str): The username for the new user.
@@ -136,15 +136,15 @@ class UserCreate(UserBase):
 
 class UserLogin(UserBase):
     """
-    Pydantic model for authentication the user.
+    Pydantic model for authentication of the user.
 
-    This class extends `UserBase` and adds fields required for user login, such as:
+    This class extends `UserBase` and adds fields required for user login, such as
     - `password`: The password for the user.
     - `login`: The user's login or email address.
 
     Attributes:
         login (str): The user's login or email address.
-        password (str): The password for the user.
+        Password (str): The password for the user.
 
     This model is used for validating incoming data when authenticating a user in the system.
     """
@@ -174,7 +174,7 @@ class UserLogin(UserBase):
     def validate_login(cls, login: str) -> str:
         """
         Validates the login field by ensuring it is not empty, stripping whitespace,
-        and verifying email format if applicable.
+        and verifying the email format if applicable.
 
         If the login input appears to be an email address, it is converted to lowercase
         and validated using Pydantic's `EmailStr` validator.

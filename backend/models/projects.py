@@ -115,7 +115,7 @@ class ProjectRole(Base):
         "Project",
         back_populates="project_roles"
     )
-    user: Mapped[["User"]] = relationship(
+    user: Mapped["User"] = relationship(
         "User",
         back_populates="project_roles",
     )
