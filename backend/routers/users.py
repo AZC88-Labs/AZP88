@@ -73,6 +73,7 @@ def get_me(current_user: User = Depends(get_current_user)):
         dict: A dictionary containing the user's basic information (username, email, role).
     """
 
-    return {"username": current_user.username,
+    return {"id": current_user.id,
+            "username": current_user.username,
             "email": current_user.email,
             "role": current_user.role}
