@@ -63,10 +63,4 @@ class ProjectBase(BaseModel):
         return desc
 
     class Config:
-        """
-        Configuration for the Pydantic model.
-
-        Attributes:
-            from_attributes (bool): Allows population of the model from ORM objects.
-        """
         from_attributes = True

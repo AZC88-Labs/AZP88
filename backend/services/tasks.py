@@ -8,12 +8,20 @@ from ..models.enums import ProjectRole, TaskRole
 
 def create_task(project_id: int, task_data: TaskBase, db: Session, user: User):
     """
-    TODO: Docs
-    :param project_id:
-    :param task_data:
-    :param db:
-    :param user:
-    :return:
+    Creates a new task within a specified project.
+
+    Args:
+        project_id (int): The ID of the project where the task will be created.
+        task_data (TaskBase): The data for the new task, including title and description.
+        db (Session): The database session used for querying and committing changes.
+        user (User): The user attempting to create the task.
+
+    Returns:
+        Task: The newly created task object.
+
+    Raises:
+        HTTPException: If the project is not found (404).
+        HTTPException: If the user is not authorized to create a task (401).
     """
 
     project = db.query(Project).filter(Project.id==project_id).first()
