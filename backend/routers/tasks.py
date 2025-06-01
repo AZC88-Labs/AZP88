@@ -13,7 +13,7 @@ router = APIRouter()
     "/create",
     summary="Creates a new task in the project",
     description="Endpoint allows you to create a new task within the selected project based on the provided data.",
-    tags=["tasks"]
+    tags=["Tasks"]
 )
 def create(project_id: int, task_data: TaskBase, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
     """

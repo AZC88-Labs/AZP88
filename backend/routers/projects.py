@@ -13,7 +13,7 @@ router = APIRouter()
     "/create",
     summary="Creates new project",
     description="Endpoint allows you to create a new project based on the provided data. Requires authentication.",
-    tags=["projects"]
+    tags=["Projects"]
 )
 def create(project_data: ProjectBase, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
     """
