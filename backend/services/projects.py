@@ -1,13 +1,11 @@
-from fastapi import Depends
 from sqlalchemy.orm import Session
-from ..dependencies import get_current_user, get_db
 from ..models.users import User
 from ..schemas.projects import ProjectBase
 from ..models.projects import Project, ProjectRole
 
 
 # FOR USER. IN FUTURE REFACTOR AND ADD LOGIC FOR TEAMS!
-def create_project(project_data: ProjectBase, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+def create_project(project_data: ProjectBase, db: Session, user: User):
     """
     Creates a new project and assigns the current user as its owner with the admin role.
 

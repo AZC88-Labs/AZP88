@@ -6,64 +6,19 @@ class TaskBase(BaseModel):
     Basic Task's pydantic schema.
     """
 
+    title: str
+    description: str
+
+
     class Config:
         from_attributes = True
 
 
-class TaskCreate(TaskBase):
-    """
-    TODO: documentation, validation
-    """
-
-    title: str
-    description: str
-
-
-class TaskEdit(TaskBase):
-    """
-    TODO: documentation, validation
-    """
-
-    title: str
-    description: str
-
-
-class TaskDelete(TaskBase):
-    """
-    TODO: documentation, validation. MOZLIWE ZE USELESS
-    """
-
-    title: str
-    description: str
-
-
 class TagBase(BaseModel):
     """
+    TODO: IN FUTURE LIKE WHOLE TAG's feature
     Basic Tags pydantic schema.
     """
 
     class Config:
         from_attributes = True
-
-
-class TagCreate(TagBase):
-    """
-    TODO: documentation, validation
-    """
-
-    tag_name: str
-
-
-class TagEdit(TagBase):
-    """
-    TODO: documentation, validation
-    """
-
-    tag_name: str
-
-
-class TagDelete(TagBase):
-    """
-    TODO: documentation, validation MOZLIWE ZE USELESS
-    """
-    tag_name: str
